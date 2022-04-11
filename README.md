@@ -2,21 +2,39 @@
 
 ## Introduction
 
-Managed File Transfer System (MFTS) has become cluttered with directories that have been within our system. 
+Managed File Transfer System (MFTS) has become cluttered with directories that have been within our server. 
 This tool that has been created will serve as an email generator along with the ability to archive directories upon the 4 week completion date. 
 
-
-## Building and Running
-
-This project skeleton can be run in multiple ways:
+## Emails leading to cleanup
 
 
-### Interesting Files
+## Directory cleanup
 
-- `pyproject.toml`: Current standard selection build tools
-- `setup.py`: Almost empty. Only needed to suppor `pip install -e ...`
-- `setup.cfg`: Where *all* of the metadata lives, including version
-- `src/__main__.py`: Only necessary if you want to support running without installing.
-- `src/minimalhello/__init__.py`: Demonstrates fetching `__version__` from build.
-- `src/minimalhello/__main__.py`: Top-level script, supports `python -m minimalhello ...`
+
+## Registering a new share 
+
+Invocation would look something like: 
+[register new share, RT #, list email directory, start = now, config email]
+
+
+## config file
+where will memory occur? --> specify using a command
+- Directory used will be archived into a new directory. 
+  - will have a new naming convention
+  - RT#____first_email.yaml 
+      - # 1 week warning
+  - RT#____second_email.yaml 
+      - # 48 hr warning
+  - RT#____24hr_final_email.yaml
+      - # 24 hr warning
+  - RT#_____deleted_email.yaml
+      - # Email has now been deleted.
+  
+
+## CHRON JOB
+CHRON will check every RT ticket status, its current state. Will also check if it has been 24 hours since the final email was sent to begin the deletion process. 
+
+This tool will not completley delete a directory but instead be redirected to an external directory that will be an archive folder to be stored. 
+
+
 
