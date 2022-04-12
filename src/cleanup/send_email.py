@@ -23,12 +23,12 @@ first_warning.set_content('
  HGSC
  Baylor College of Medicine
  
- ')
+')
 
 
 
  with smtplib.smtplib.SMTP_SSL('smtp.rt.hgsc.bcm.edu/', 465) as smtp:
      smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
      smtp.send_message(first_warning)
-     
+
 
