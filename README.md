@@ -2,8 +2,8 @@
 
 ## Introduction
 
-Managed File Transfer System (MFTS) has become cluttered with directories that have been within our server. 
-This tool that has been created will serve as an email generator along with the ability to archive directories upon the 4 week completion date. 
+Managed File Transfer System (MFTS) has become cluttered with directories within our server. 
+This tool that has been created will serve to archive directories along with the ability to send warning emails to our collaborators during the life cycle of the cleanup process. Upon the 4 week completion date, folders will be archived to a new directory to be stored. 
 
 ## Emails leading to cleanup
 
