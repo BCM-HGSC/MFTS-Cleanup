@@ -17,7 +17,7 @@ Invocation would look something like:
 [register new share, RT #, list email directory, start = now, config email]
 
 
-## config file
+## Config file
 where will memory occur? --> specify using a command
 - Directory used will be archived into a new directory. 
   - will have a new naming convention
