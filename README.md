@@ -1,4 +1,4 @@
-# minimal_hello_world
+# MFTS-Cleanup
 
 ## Introduction
 
