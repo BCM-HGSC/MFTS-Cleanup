@@ -34,8 +34,8 @@ where will memory occur? --> specify using a command
       -  Email has now been deleted.
   
 
-## CHRON JOB
-CHRON will check every RT ticket status, its current state. Will also check if it has been 24 hours since the final email was sent to begin the deletion process. 
+## CRON JOB
+CRON will check every RT ticket status, its current state. Will also check if it has been 24 hours since the final email was sent to begin the deletion process. 
 
 This tool will not completley delete a directory but instead be a redirection mechanism for the directory to an external directory which will serve as an archive folder for storage. 
 
