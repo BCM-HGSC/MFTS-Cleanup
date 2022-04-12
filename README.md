@@ -9,6 +9,9 @@ This tool that has been created will serve to archive directories along with the
 
 
 ## Directory cleanup
+- 1 week until clean up (3 weeks since rt creation)
+- 48 hrs until cleanup (3 weeks and 4 days from rt creation)
+- 24 hrs until cleanup (3 weeks and 6 days from rt creation)
 
 
 ## Registering a new share 
