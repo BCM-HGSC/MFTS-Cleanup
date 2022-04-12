@@ -22,13 +22,13 @@ where will memory occur? --> specify using a command
 - Directory used will be archived into a new directory. 
   - will have a new naming convention
   - RT#____first_email.yaml 
-      - ### 1 week warning
+      -  1 week warning
   - RT#____second_email.yaml 
-      - ### 48 hr warning
+      -  48 hr warning
   - RT#____24hr_final_email.yaml
-      - ### 24 hr warning
+      -  24 hr warning
   - RT#_____deleted_email.yaml
-      - ### Email has now been deleted.
+      -  Email has now been deleted.
   
 
 ## CHRON JOB
