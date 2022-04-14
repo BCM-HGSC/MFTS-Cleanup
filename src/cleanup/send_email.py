@@ -2,7 +2,7 @@
 # import os # for interacting with operating system
 # import smtplib 
 # from email.message import EmailMessage
-import argparse
+
 
 # EMAIL_SENDER = os.environ.get('EMAIL_SENDER')
 # EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
@@ -19,6 +19,9 @@ import argparse
 #      smtp.send_message(first_warning)
 
 # argparse is a command line argument processing
+
+import argparse
+
 parser = argparse.ArgumentParser(description='Adding Emails')
 parser.add_argument("To", type = str, help ="Send")
 parser.add_argument("From", type= str, help = "Receive")
