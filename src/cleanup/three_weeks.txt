@@ -1,0 +1,4 @@
+Hello,
+
+This email is a warning that it has been 3 weeks since your directory for rt #_ _ _ _ .
+In order to conserve data in our servers, there will be a cleanup 
