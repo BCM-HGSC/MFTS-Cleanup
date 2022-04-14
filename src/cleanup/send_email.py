@@ -18,7 +18,14 @@ import argparse
 #      smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)
 #      smtp.send_message(first_warning)
 
+# argparse is a command line argument processing
+parser = argparse.ArgumentParser(description='Adding Emails')
+parser.add_argument("To", type = str, help ="Send")
+parser.add_argument("From", type= str, help = "Receive")
 
-parser = argparse.ArgumentParser(description='Add Receiving Email')
-parser.add_argument("Add sender's email ", type = str)
-parser.add_argument("Add receiver email", type= str)
+args = parser.parse_args()
+print(args.To)
+print(args.From)
+
+# TODO  missing arguments for "To:" and "From"
+
