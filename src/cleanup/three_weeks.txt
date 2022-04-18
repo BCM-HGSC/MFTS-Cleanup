@@ -1,4 +1,12 @@
+## Second email (1 week until deletion)
+
 Hello,
 
 This email is a warning that it has been 3 weeks since your directory for rt #_ _ _ _ .
-In order to conserve data in our servers, there will be a cleanup 
+In order to conserve our finite data transfer storage, this data will be kept live for 1 more week and then will be purged. 
+Please let us know promptly if the collaborator encounters any problems downloading and validating this data.
+
+
+Thank you,
+HGSC 
+Baylor College of Medicine

@@ -10,7 +10,7 @@
 # first_warning = EmailMessage()
 # first_warning['Subject'] = "Directory Cleanup Warning"
 # first_warning['From'] = EMAIL_SENDER
-# first_warning['To'] = os.environ.get('EMAIL_RECEIVER') # TODO figure out how to obtain this email that's not 'EMAIL_ADDRESS'
+# first_warning['To'] = os.environ.get('EMAIL_RECEIVER') #TOD0 figure out how to obtain this email that's not 'EMAIL_ADDRESS'
 
 # #first_warning.set_content(first_email.txt)
 
