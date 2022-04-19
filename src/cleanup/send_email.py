@@ -22,6 +22,9 @@
 
 # import library
 import argparse
+import sys
+import os
+# from pathlib import Path
 
 # creating parser
 parser = argparse.ArgumentParser(description='Adding Emails')
@@ -30,16 +33,31 @@ parser = argparse.ArgumentParser(description='Adding Emails')
 parser.add_argument('--email_from', type=str)
 parser.add_argument('--rt_number', type=str)
 parser.add_argument('--email_send',type=str)
+# parser.add_argument('--dir_path', type= PosixPath)
 
 
 
 # parse the argument
 args = parser.parse_args()
 
+# user input for directory path
+user_input = input("Enter directory path: ")
+assert os.path.exists(user_input), "No path found at this location: " + str(user_input)
+f = open(user_input, 'r+')
+print("Path sucessfully loaded")
+# TODO figure out what the file location requrires
+f.close()
+
+
+
 # print [requirement] + user input argument
 print('Email from: ' + args.email_from)
 print('For RT#: ' + args.rt_number)
 print('Sending to: ' + args.email_send)
+# print('Located in directory,' + args.dir_path)
+
+
+
 
 
 
