@@ -20,7 +20,7 @@ args = parser.parse_args()
 # user input for directory path
 import os
 
-path = input("enter filepath: ")
+path = input("Enter filepath: ")
 
 for f in os.listdir(os.path.expanduser(path)):
     print(f)
