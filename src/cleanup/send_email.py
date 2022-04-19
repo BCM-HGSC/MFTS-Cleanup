@@ -20,15 +20,28 @@
 
 # argparse is a command line argument processing
 
+# import library
 import argparse
 
+# creating parser
 parser = argparse.ArgumentParser(description='Adding Emails')
-parser.add_argument("To", type = str, help ="Send")
-parser.add_argument("From", type= str, help = "Receive")
 
+# add the argument
+parser.add_argument('--email', type=str, required=True)
+
+# parse the argument
 args = parser.parse_args()
-print(args.To)
-print(args.From)
+
+# print "Hello" + user input argument
+print('Email from: ' + args.email)
+
+
+# parser.add_argument("From", type= str, help = "Receive")
+
+# args = parser.parse_args("Adding Emails")
+
+# print(args.To)
+# print(args.From)
 
 # TODO  missing arguments for "To:" and "From"
 
