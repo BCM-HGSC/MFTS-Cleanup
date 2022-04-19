@@ -27,13 +27,17 @@ import argparse
 parser = argparse.ArgumentParser(description='Adding Emails')
 
 # add the argument
-parser.add_argument('--email', type=str, required=True)
+parser.add_argument('--email', type=str)
+parser.add_argument('--rt_number', type=str)
 
 # parse the argument
 args = parser.parse_args()
 
 # print "Hello" + user input argument
 print('Email from: ' + args.email)
+print('For RT#' + args.rt_number)
+
+
 
 
 # parser.add_argument("From", type= str, help = "Receive")
