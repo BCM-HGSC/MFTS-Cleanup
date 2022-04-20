@@ -31,7 +31,7 @@ for f in os.listdir(os.path.expanduser(path)):
 print('Email from: ' + args.email_from)
 print('For RT#: ' + args.rt_number)
 print('Sending to: ' + args.email_send)
-# print('Located in directory,' + args.dir_path)
+print('Located in directory,' + args.dir_path)
 
 
 
