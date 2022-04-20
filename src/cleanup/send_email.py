@@ -18,12 +18,12 @@ parser.add_argument('--email_send',type=str)
 args = parser.parse_args()
 
 # user input for directory path
-import os
+# import os
 
-path = input("Enter filepath: ")
+# path = input("Enter filepath: ")
 
-for f in os.listdir(os.path.expanduser(path)):
-    print(f)
+# for f in os.listdir(os.path.expanduser(path)):
+#     print(f)
 
 
 
@@ -31,7 +31,7 @@ for f in os.listdir(os.path.expanduser(path)):
 print('Email from: ' + args.email_from)
 print('For RT#: ' + args.rt_number)
 print('Sending to: ' + args.email_send)
-print('Located in directory,' + args.dir_path)
+# print('Located in directory,' + args.dir_path)
 
 
 
