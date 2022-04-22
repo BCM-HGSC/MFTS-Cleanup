@@ -1,7 +1,7 @@
 # from msilib.schema import Directory
 import shutil
 from datetime import datetime
-from send_email import *
+import send_email as se
 
 
 # print(dir(shutil))
