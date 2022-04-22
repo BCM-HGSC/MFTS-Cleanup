@@ -1,24 +1,27 @@
+# from msilib.schema import Directory
 import shutil
 from datetime import datetime
+from send_email import *
 
-print(dir(shutil))
 
-src = {/Users/u242806/MFTS-Cleanup/test/path}
-dest = {/test/aspera/mfts/rharris/rt1234}
+# print(dir(shutil))
 
-shutil.copyfile(src,dest)
+# src = (/Users/u242806/MFTS-Cleanup/test/path)
+# dest = (/test/aspera/mfts/rharris/rt1234)
+
+# shutil.copyfile(src,dest)
 
 
 def move_dirs(file_dir):
     shutil.copy(file_dir,'')
     shutil.copy(file_dir,'/Users/u242806/BaylorCollegeOfMedicine/repos/mfts_auto/auto_email/')
-    os.rename(file_dir, '/test/path)
+    os.rename(file_dir, '/test/path')
 
 
 def check_for_update():
     # get time as string
     now = datetime.now()
-    file_dir = 
+    file_dir = obtain_dir.send_email
 
 
 
