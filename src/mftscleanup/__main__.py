@@ -1,7 +1,7 @@
 """
 By naming the top-level module __main__, it is possible to run this module as
 a script by running:
-`python -m minimalhello [args...]`
+`python -m mftscleanup [args...]`
 """
 
 from sys import argv, path
@@ -21,8 +21,10 @@ def main():
             """  # This f-string syntax requires 3.8+
         )
     )
-    for p in path:
-        print(p)
+    # TODO: check and clean directories
+    print('this is a test')
+    # for p in path:
+    #     print(p)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 ## Second email (1 week until deletion)
 
-Hello,
+check-and-clean-dirs,
 
 This email is a warning that it has been 3 weeks since your directory for rt #_ _ _ _ .
 In order to conserve our finite data transfer storage, this data will be kept live for 1 more week and then will be purged. 

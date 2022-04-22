@@ -1,4 +1,4 @@
-Hello, 
+check-and-clean-dirs, 
 This message is to warn you all files under the folder [link given from directory] as /share/share/mfts/private/{requestor}/rt(number)} has been shared with the collaborator.
 Proper MFTS accounts have been created. Login information and instructions to download the data has been emailed to the collaborator directly. 
 
