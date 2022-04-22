@@ -6,9 +6,9 @@ This also allows packaging up as a zipapp.
 
 If you do not need this functionality:
   - Remove this file.
-  - Consider moving minimalhello out of src.
+  - Consider moving mftscleanup out of src.
 """
 
-import minimalhello.__main__
+import mftscleanup.__main__
 
-minimalhello.__main__.main()
+mftscleanup.__main__.main()
