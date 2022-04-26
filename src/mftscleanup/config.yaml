@@ -1,9 +1,6 @@
 '''
-
-have arguments here 
-
+Arguments for testing 
 '''
 
-email_from:
-RT#:
-email_send: 
+email_from: rt@bcm.hgsc.edu
+email_to: sarah.ponce@bcm.edu 

@@ -1,6 +1,6 @@
 # from msilib.schema import Directory
 from datetime import datetime
-from .send_email import obtain_dir
+from send_email import obtain_dir
 import shutil
 from pathlib import Path
 # print(dir(shutil))
@@ -13,7 +13,7 @@ from pathlib import Path
 
 def move_dirs(obtain_dir):
     obtain_dir = obtain_dir(Path)
-    shutil.copyfile(obtain_dir,'test/path')
+    shutil.copyfile(obtain_dir,'cleanup/mfts')
 
 
 def check_for_update(directory):
@@ -23,4 +23,3 @@ def check_for_update(directory):
     # bringing directory from send_email
     file_dir = obtain_dir(Path)
     print(file_dir)
-

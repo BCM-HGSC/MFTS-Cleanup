@@ -2,14 +2,11 @@
 import argparse
 from pathlib import Path
 
+
+
+# # TODO : make neater, possibly allow for user input functionality
 # creating parser
 parser = argparse.ArgumentParser(description='Adding Emails')
-
-# add the argument
-parser.add_argument('--email_from', type=str)
-parser.add_argument('--rt_number', type=str)
-parser.add_argument('--email_send',type=str)
-# parser.add_argument('--dir_path', type= path)
 
 # parse the argument
 args = parser.parse_args()
@@ -18,9 +15,9 @@ args = parser.parse_args()
 parser = argparse.ArgumentParser(description='Adding Emails')
 
 # add the argument
-parser.add_argument('--email_from', type=str)
-parser.add_argument('--rt_number', type=str)
-parser.add_argument('--email_send',type=str)
+parser.add_argument('--email_from', type= str)
+parser.add_argument('--rt_number', type= str)
+parser.add_argument('--email_send',type= str)
 
 
 # parse the argument
@@ -28,9 +25,9 @@ args = parser.parse_args()
 
 # print [requirement] + user input argument
 print('Email from: ' + args.email_from)
-print('For RT#: ' + args.rt_number)
+print('RT number: ' + args.rt_number)
 print('Sending to: ' + args.email_send)
-# # print('Located in directory,' + )
+# print('Located in directory,' + )
 
 def obtain_dir(directory):
     for d in directory:
@@ -42,3 +39,12 @@ def obtain_dir(directory):
     # return (abs_path)
 
 
+
+def obtain_info(email_from, rt_num, email_to):
+    parser = argparse.ArgumentParser(description='Adding Emails')
+    for p in parser:
+        args = parser.parse_args()
+        parser.add_argument(email_from, type=str)
+        parser.add_argument(rt_num, type=str)
+        parser.add_argument(email_to ,type=str)
+    return p
