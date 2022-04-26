@@ -16,11 +16,24 @@ This tool that has been created will serve to archive directories along with the
 
 ## Registering a new share 
 
-Invocation would look something like: 
-[register new share, RT #, list email directory, start = now, config email]
+Invocation would look something like:
+
+`register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
 
 
 ## Config file
+
+A YAML file will contain the following:
+
+```yaml
+metadata_root: PATH/TO/METADATA/ROOT
+email:
+    from_address: SENDER@bcm.edu
+    host: SMTP.SERVER.DOMAIN
+logging:
+    level: INFO
+    ...
+```
 where will memory occur? --> specify using a command
 - Directory used will be archived into a new directory. 
   - will have a new naming convention
@@ -37,7 +50,20 @@ where will memory occur? --> specify using a command
 ## CRON JOB
 CRON will check every RT ticket status, its current state. Will also check if it has been 24 hours since the final email was sent to begin the deletion process. 
 
-This tool will not completley delete a directory but instead be a redirection mechanism for the directory to an external directory which will serve as an archive folder for storage. 
+Example cron command:
 
+`auto-cleanup-shares CONFIG_FILE_PATH`
 
+## Metadata Root Layout
 
+- active
+    - 5678_initial.yaml
+    - 5678_first_email.yaml
+    - ...
+- archive
+    - 1234_initial.yaml
+    - 1234_first_email.yaml
+    - 1234_second_email.yaml
+    - 1234_final_email.yaml
+    - 1234_cleanup.yaml
+    - ...
