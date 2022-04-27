@@ -1,6 +1,11 @@
 '''
 Arguments for testing 
 '''
+metadata_root: /aspera/share/mfts/ # TODO
+email:
+  from_address: SENDER@bcm.edu
+  host: SMTP.SERVER.DOMAIN
 
-email_from: rt@bcm.hgsc.edu
-email_to: sarah.ponce@bcm.edu 
+logging:
+  level: INFO
+  ...
