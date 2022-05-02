@@ -8,4 +8,8 @@ def auto_cleanup():
 
 
 def new_share(metadata_root, rt_number, share_directory, email_addresses):
+    # metadata_root = 
+    # rt_number =
+    # share_directory =
+    # email_addresses = 
     pass # TODO

@@ -5,7 +5,7 @@ a script by running:
 """
 
 import argparse,os
-
+from pathlib import Path
 from sys import argv
 from textwrap import dedent
 
@@ -50,10 +50,10 @@ def parse_register_command_line():
     `register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
     """
     parser= argparse.ArgumentParser(description="Registering a new share")
-    parser.add_argument('CONFIG_FILE_PATH',type=str)
-    parser.add_argument('RT_NUMBER',type=str)
-    parser.add_argument('SHARE_DIRECTORY_PATH', type= dir_path)
-    parser.add_argument('EMAIL', type=str)
+    parser.add_argument('config_file_path')
+    parser.add_argument('rt_number')
+    parser.add_argument('share_directory_path', type= dir_path)
+    parser.add_argument('email_addresses', nargs="+")
     args = parser.parse_args()
 
     print("the inputs are:")
@@ -65,19 +65,18 @@ def parse_register_command_line():
 
 
 def load_config(config_file_path):
-    with open('src/mftscleanup/config.yaml', mode= "r+") as config_file_path:
-        for info in config_file_path:
-            return info
-    return Dict(yaml.safe_load(config_file_path))
+    with open(config_file_path, mode= "r") as config_file:
+        data = yaml.load(config_file)
+    return Dict(data)
+    # return Dict(yaml.load(config_file_path))
 
-
-if __name__ == "__main__":
-    main()
 
 def dir_path(string):
     if os.path.isdir(string):
-        return string
+        return Path(string)
     else:
         raise NotADirectoryError(string)
 
 
+if __name__ == "__main__":
+    main()
