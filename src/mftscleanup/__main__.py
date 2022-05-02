@@ -65,7 +65,7 @@ def parse_register_command_line():
 
 
 def load_config(config_file_path):
-    with open(config_file_path, mode= "r") as config_file:
+    with open('src/mftscleanup/config.yaml', mode= "r") as config_file:
         data = yaml.load(config_file)
     return Dict(data)
     # return Dict(yaml.load(config_file_path))
