@@ -52,7 +52,7 @@ def parse_register_command_line():
     parser= argparse.ArgumentParser(description="Registering a new share")
     parser.add_argument('config_file_path')
     parser.add_argument('rt_number')
-    parser.add_argument('share_directory_path', type= dir_path)
+    parser.add_argument('share_directory_path', type= directory_path)
     parser.add_argument('email_addresses', nargs="+")
     args = parser.parse_args()
 
@@ -65,7 +65,7 @@ def parse_register_command_line():
 
 
 def load_config(config_file_path):
-    with open('src/mftscleanup/config.yaml', mode= "r") as config_file:
+    with open(config_file_path, mode= "r") as config_file:
         data = yaml.load(config_file)
     return Dict(data)
     # return Dict(yaml.load(config_file_path))
