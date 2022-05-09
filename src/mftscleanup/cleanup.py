@@ -3,6 +3,7 @@ Implements the registration and automatic cleanup of shares.
 Operates just below command line parsing.
 """
 
+
 def auto_cleanup():
     pass  # TODO
 
