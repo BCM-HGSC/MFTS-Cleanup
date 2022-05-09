@@ -27,55 +27,53 @@ def main():
             """  # This f-string syntax requires 3.8+
         )
     )
-    # TODO: check and clean directories
-    # TODO: run obtain directory from main
-    # TODO: ask for user input on email, rt# , and recipient email
     print("this is a test")
     # for p in path:
     #     print(p)
 
+def load_config(config_file_path):
+    with open(config_file_path) as f:
+        config = Dict(yaml.safe_load(f))
+    return config
 
-def register_share():
-    args = parse_register_command_line()
-    config = load_config(args.config_file_path)
-    print(args)
-    print(config)
-    new_share(
-        config.metadata_root, args.rt_number, args.share_directory, args.email_addresses
-    )
-
+def directory_path(string):
+    if os.path.isdir(string):
+        return Path(string)
+    else:
+        raise NotADirectoryError(string)
 
 def parse_register_command_line():
     """
     `register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
     """
     parser= argparse.ArgumentParser(description="Registering a new share")
+
     parser.add_argument('config_file_path')
     parser.add_argument('rt_number')
     parser.add_argument('share_directory_path', type= directory_path)
     parser.add_argument('email_addresses', nargs="+")
     args = parser.parse_args()
 
-    print("the inputs are:")
+    print("Registering a new share:")
     for arg in vars(args):
         print("{} is {}".format(arg, getattr(args, arg)))
 
     return args
-    # return Dict()
 
+def register_share():
+    args = parse_register_command_line()
+    config = load_config(args.config_file_path)
 
-def load_config(config_file_path):
-    with open(config_file_path, mode= "r") as config_file:
-        data = yaml.load(config_file)
-    return Dict(data)
+    new_share(
+        config.metadata_root, args.rt_number, args.share_directory_path, args.email_addresses
+        )
+
+    # # return Dict()
+
+   
+    # return Dict(config)
     # return Dict(yaml.load(config_file_path))
-
-
-def dir_path(string):
-    if os.path.isdir(string):
-        return Path(string)
-    else:
-        raise NotADirectoryError(string)
+ 
 
 
 if __name__ == "__main__":
