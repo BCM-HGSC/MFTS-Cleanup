@@ -31,16 +31,14 @@ def main():
     # for p in path:
     #     print(p)
 
-def load_config(config_file_path):
-    with open(config_file_path) as f:
-        config = Dict(yaml.safe_load(f))
-    return config
+def register_share():
+    args = parse_register_command_line()
+    config = load_config(args.config_file_path)
 
-def directory_path(string):
-    if os.path.isdir(string):
-        return Path(string)
-    else:
-        raise NotADirectoryError(string)
+    new_share(
+        config.metadata_root, args.rt_number, args.share_directory_path, args.email_addresses
+        )
+
 
 def parse_register_command_line():
     """
@@ -60,13 +58,21 @@ def parse_register_command_line():
 
     return args
 
-def register_share():
-    args = parse_register_command_line()
-    config = load_config(args.config_file_path)
+    
+def directory_path(string):
+    if os.path.isdir(string):
+        return Path(string)
+    else:
+        raise NotADirectoryError(string)
 
-    new_share(
-        config.metadata_root, args.rt_number, args.share_directory_path, args.email_addresses
-        )
+
+def load_config(config_file_path):
+    with open(config_file_path) as f:
+        config = Dict(yaml.safe_load(f))
+    return config
+
+
+
 
     # # return Dict()
 
