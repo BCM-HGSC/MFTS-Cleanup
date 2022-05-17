@@ -93,26 +93,5 @@ def load_config(config_file_path):
     return config
 
 
-
-# 
-# def get_file_info():
-    # for p in list(Path().rglob("*.yaml")):
-        # if p.is_file():
-            # file_name = p
-            # file_size = os.stat_result.st_size
-            # print(file_size) # file_name,
-# 
-# def get_num_files():
-    # num_files = len(list(Path(".").rglob("*.yaml")))
-    # print(num_files)
-
-    # # return Dict()
-
-   
-    # return Dict(config)
-    # return Dict(yaml.load(config_file_path))
- 
-
-
 if __name__ == "__main__":
     main()
