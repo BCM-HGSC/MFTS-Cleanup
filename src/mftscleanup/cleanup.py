@@ -10,6 +10,7 @@ from yaml import dump
 
 
 def auto_cleanup():
+    print("Hello World!")
     pass  # TODO
 
 
