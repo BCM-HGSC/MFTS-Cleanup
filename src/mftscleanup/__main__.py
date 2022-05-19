@@ -95,6 +95,7 @@ this is where auto_cleanup functions begin
 
 """
 
+
 def auto_cleanup():
     arguments = start_cleanup()
     config = load_config(arguments.config_file_path)
