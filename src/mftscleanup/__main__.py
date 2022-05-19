@@ -5,18 +5,18 @@ a script by running:
 """
 
 import argparse,os
+from ast import arguments
 
 from os.path import getsize
 from pathlib import Path
-from sys import argv, float_info
+from sys import argv
 from textwrap import dedent
 
 from addict import Dict
-from pkg_resources import yield_lines
 import yaml
 
 from . import __version__
-from .cleanup import auto_cleanup, new_share
+from .cleanup import new_share
 
 
 def main():
@@ -50,10 +50,6 @@ def register_share():
     # f_num_size = get_directory_totals(".")
     no_of_files = get_directory_totals(".")[0]
     t_file_size = get_directory_totals(".")[1]
-
-
- 
-   
 
     new_share(
         config.metadata_root, args.rt_number, args.share_directory_path, args.email_addresses, 
@@ -91,6 +87,50 @@ def load_config(config_file_path):
     with open(config_file_path) as f:
         config = Dict(yaml.safe_load(f))
     return config
+
+
+
+"""
+this is where auto_cleanup functions begin
+
+"""
+
+def auto_cleanup():
+    arguments = start_cleanup()
+    config = load_config(arguments.config_file_path)
+
+    new_share(
+        config.metadata_root, arguments.rt_number
+        )
+
+
+def start_cleanup():
+    print("Hello World")
+    """
+    `auto-cleanup-shares CONFIG_FILE_PATH `
+    """
+    parser = argparse.ArgumentParser(description= "Required aguments to run include the following:")
+    parser.add_argument('config_file_path')
+    parser.add_argument('rt_number', type=int)
+    arguments = parser.parse_args()
+    print("Obtaining config file")
+
+    return arguments
+    
+
+
+ 
+
+def process_cleanup():
+    pass
+    # args = start_cleanup()
+    # config = load_config(args.config_file_path)
+    
+
+
+    # start_cleanup(
+    #     config.auto_cleanup
+    # )
 
 
 if __name__ == "__main__":
