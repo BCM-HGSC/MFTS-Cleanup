@@ -29,7 +29,7 @@ def new_share(metadata_root, rt_number, share_directory, email_addresses, no_of_
 def new_cleanup(config_file_path):
     active_dir = config_file_path.parent
     top = pathlib.Path(active_dir)
-    for p in top.rglob("*"):
+    for p in top.rglob("*_initial.yaml"):
         if p.is_file():
             print(p)
     
