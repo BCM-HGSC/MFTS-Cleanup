@@ -3,9 +3,13 @@ Implements the registration and automatic cleanup of shares.
 Operates just below command line parsing.
 """
 
+from datetime import date
 from os import access
 import pathlib
-from yaml import dump
+
+from addict import Dict
+from yaml import dump, safe_load
+
 
 def new_share(metadata_root, rt_number, share_directory, email_addresses, no_of_files, t_file_size):
     """
@@ -16,9 +20,8 @@ def new_share(metadata_root, rt_number, share_directory, email_addresses, no_of_
         share_directory = str(share_directory),
         email_addresses = email_addresses,
         number_of_files = no_of_files,
-        total_file_size = t_file_size
-
-
+        total_file_size = t_file_size,
+        registration_date = str(date.today()),        
     )
     destination = pathlib.Path(metadata_root) / "active" / f"{rt_number}_initial.yaml"
     directory = destination.parent
@@ -26,10 +29,18 @@ def new_share(metadata_root, rt_number, share_directory, email_addresses, no_of_
     destination.write_text(dump(payload), encoding="UTF-8")  
    
 
-def new_cleanup(config_file_path):
-    active_dir = config_file_path.parent
-    top = pathlib.Path(active_dir)
-    for p in top.rglob("*_initial.yaml"):
+def process_active_shares(metadata_root, from_address, email_host):
+    active_dir = pathlib.Path(metadata_root) / "active"
+    today = date.today()
+    for p in active_dir.rglob("*_initial.yaml"):
         if p.is_file():
-            print(p)
+            with open(p) as f:
+                rt_share_info = Dict(safe_load(f))
+            process_share(rt_share_info, today)
+
+
+def process_share(rt_share_info, today):
+    print(rt_share_info)
+    registration_date = date.fromisoformat(rt_share_info.registration_date)
+    print(repr(registration_date), repr(today))
     
