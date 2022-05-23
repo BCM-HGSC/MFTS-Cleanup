@@ -32,19 +32,4 @@ def new_cleanup(config_file_path):
     for p in top.rglob("*"):
         if p.is_file():
             print(p)
-
- 
-
-
-
-        
-    pass
-    # payload = dict(
-    # #     rt_number = int(rt_number)
-    # )
-    # destination = Path(metadata_root) / "active" / f"{rt_number}_first_email.yaml"
-    # directory = destination.parent
-    # directory.mkdir(parents=True, exist_ok=True)
-    # destination.write_text(dump(payload), encoding="UTF-8")  
-
     
