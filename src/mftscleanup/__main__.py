@@ -101,20 +101,15 @@ def auto_cleanup():
     new_cleanup(
         args.config_file_path
         )
-    return(config)
 
 
 def start_cleanup():
-    print("Hello World")
     """
     `auto-cleanup-shares CONFIG_FILE_PATH `
     """
     parser = argparse.ArgumentParser(description= "Required aguments to run include the following:")
     parser.add_argument('config_file_path', type= Path)
-    # parser.add_argument('rt_number', type= int)
-    arguments = parser.parse_args()
-    print("Attributes:")
-   
+    arguments = parser.parse_args()   
     return arguments
 
     
