@@ -5,7 +5,6 @@ a script by running:
 """
 
 import argparse,os
-from ast import arguments
 
 from os.path import getsize
 from pathlib import Path
@@ -16,7 +15,7 @@ from addict import Dict
 import yaml
 
 from . import __version__
-from .cleanup import new_share
+from .cleanup import new_cleanup, new_share
 
 
 def main():
@@ -91,18 +90,18 @@ def load_config(config_file_path):
 
 
 """
-this is where auto_cleanup functions begin
+Implements the cleanup of directories
 
 """
 
-
 def auto_cleanup():
-    arguments = start_cleanup()
-    config = load_config(arguments.config_file_path)
-
-    new_share(
-        config.metadata_root, arguments.rt_number
+    args = start_cleanup()
+    config = load_config(args.config_file_path)
+    
+    new_cleanup(
+        args.config_file_path
         )
+    return(config)
 
 
 def start_cleanup():
@@ -111,28 +110,15 @@ def start_cleanup():
     `auto-cleanup-shares CONFIG_FILE_PATH `
     """
     parser = argparse.ArgumentParser(description= "Required aguments to run include the following:")
-    parser.add_argument('config_file_path')
-    parser.add_argument('rt_number', type=int)
+    parser.add_argument('config_file_path', type= Path)
+    # parser.add_argument('rt_number', type= int)
     arguments = parser.parse_args()
-    print("Obtaining config file")
-
+    print("Attributes:")
+   
     return arguments
+
     
-
-
- 
-
-def process_cleanup():
-    pass
-    # args = start_cleanup()
-    # config = load_config(args.config_file_path)
     
-
-
-    # start_cleanup(
-    #     config.auto_cleanup
-    # )
-
 
 if __name__ == "__main__":
     main()
