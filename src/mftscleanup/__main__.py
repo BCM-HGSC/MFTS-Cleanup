@@ -15,7 +15,7 @@ from addict import Dict
 import yaml
 
 from . import __version__
-from .cleanup import new_cleanup, new_share
+from .cleanup import new_share, process_active_shares
 
 
 def main():
@@ -98,8 +98,10 @@ def auto_cleanup():
     args = start_cleanup()
     config = load_config(args.config_file_path)
     
-    new_cleanup(
-        args.config_file_path
+    process_active_shares(
+        config.metadata_root,
+        config.email.from_address,
+        config.email.host,
         )
 
 
