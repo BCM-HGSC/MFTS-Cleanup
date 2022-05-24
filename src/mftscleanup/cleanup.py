@@ -3,7 +3,8 @@ Implements the registration and automatic cleanup of shares.
 Operates just below command line parsing.
 """
 
-from datetime import date
+
+from datetime import date, timedelta
 from os import access
 import pathlib
 
@@ -43,4 +44,15 @@ def process_share(rt_share_info, today):
     print(rt_share_info)
     registration_date = date.fromisoformat(rt_share_info.registration_date)
     print(repr(registration_date), repr(today))
+
+    if (today) - (registration_date) < timedelta(21):
+        print("not enough time")
+    elif (today) - (registration_date) == timedelta(21):
+        print("yaml_file1")
+    elif (today) - (registration_date) == timedelta(25):
+        print("yaml_file2")
+    elif (today) - (registration_date) == timedelta(27):
+        print("yaml_file3")
+    else:
+        print("no action required")
     
