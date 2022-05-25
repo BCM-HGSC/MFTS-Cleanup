@@ -4,7 +4,7 @@ a script by running:
 `python -m mftscleanup [args...]`
 """
 
-import argparse,os
+import argparse, os
 
 from os.path import getsize
 from pathlib import Path
@@ -33,8 +33,9 @@ def main():
     # for p in path:
     #     print(p)
 
+
 def get_directory_totals(directory_path):
-    top= Path(directory_path)
+    top = Path(directory_path)
     num_files = total_size = 0
     for p in list(top.rglob("*")):
         if p.is_file():
@@ -51,21 +52,25 @@ def register_share():
     t_file_size = get_directory_totals(".")[1]
 
     new_share(
-        config.metadata_root, args.rt_number, args.share_directory_path, args.email_addresses, 
-        no_of_files, t_file_size
-        )
+        config.metadata_root,
+        args.rt_number,
+        args.share_directory_path,
+        args.email_addresses,
+        no_of_files,
+        t_file_size,
+    )
 
 
 def parse_register_command_line():
     """
     `register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
     """
-    parser= argparse.ArgumentParser(description="Registering a new share")
+    parser = argparse.ArgumentParser(description="Registering a new share")
 
-    parser.add_argument('config_file_path')
-    parser.add_argument('rt_number')
-    parser.add_argument('share_directory_path', type= dir_path)
-    parser.add_argument('email_addresses', nargs="+")
+    parser.add_argument("config_file_path")
+    parser.add_argument("rt_number")
+    parser.add_argument("share_directory_path", type=dir_path)
+    parser.add_argument("email_addresses", nargs="+")
     args = parser.parse_args()
 
     print("Registering a new share:")
@@ -88,34 +93,34 @@ def load_config(config_file_path):
     return config
 
 
-
 """
 Implements the cleanup of directories
 
 """
 
+
 def auto_cleanup():
     args = start_cleanup()
     config = load_config(args.config_file_path)
-    
+
     process_active_shares(
         config.metadata_root,
         config.email.from_address,
         config.email.host,
-        )
+    )
 
 
 def start_cleanup():
     """
     `auto-cleanup-shares CONFIG_FILE_PATH `
     """
-    parser = argparse.ArgumentParser(description= "Required aguments to run include the following:")
-    parser.add_argument('config_file_path', type= Path)
-    arguments = parser.parse_args()   
+    parser = argparse.ArgumentParser(
+        description="Required aguments to run include the following:"
+    )
+    parser.add_argument("config_file_path", type=Path)
+    arguments = parser.parse_args()
     return arguments
 
-    
-    
 
 if __name__ == "__main__":
     main()

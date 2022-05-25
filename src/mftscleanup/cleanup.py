@@ -12,23 +12,25 @@ from addict import Dict
 from yaml import dump, safe_load
 
 
-def new_share(metadata_root, rt_number, share_directory, email_addresses, no_of_files, t_file_size):
+def new_share(
+    metadata_root, rt_number, share_directory, email_addresses, no_of_files, t_file_size
+):
     """
     Creates a YAML file that documents the new share.
     """
     payload = dict(
-        rt_number = int(rt_number),
-        share_directory = str(share_directory),
-        email_addresses = email_addresses,
-        number_of_files = no_of_files,
-        total_file_size = t_file_size,
-        registration_date = str(date.today()),        
+        rt_number=int(rt_number),
+        share_directory=str(share_directory),
+        email_addresses=email_addresses,
+        number_of_files=no_of_files,
+        total_file_size=t_file_size,
+        registration_date=str(date.today()),
     )
     destination = pathlib.Path(metadata_root) / "active" / f"{rt_number}_initial.yaml"
     directory = destination.parent
     directory.mkdir(parents=True, exist_ok=True)
-    destination.write_text(dump(payload), encoding="UTF-8")  
-   
+    destination.write_text(dump(payload), encoding="UTF-8")
+
 
 def process_active_shares(metadata_root, from_address, email_host):
     active_dir = pathlib.Path(metadata_root) / "active"
@@ -55,4 +57,11 @@ def process_share(rt_share_info, today):
         print("yaml_file3")
     else:
         print("no action required")
-    
+
+
+def get_share_status(active_dir, share_name, date):
+    # this function will reach a conclusion for the status of a share based on the date it was registered.
+    pass
+
+
+# return "action"
