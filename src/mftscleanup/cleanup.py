@@ -13,18 +13,26 @@ from yaml import dump, safe_load
 
 
 def new_share(
-    metadata_root, rt_number, share_directory, email_addresses, no_of_files, t_file_size
+    metadata_root,
+    rt_number,
+    share_directory,
+    email_addresses,
+    no_of_files,
+    t_file_size,
+    start_date=None,
 ):
     """
     Creates a YAML file that documents the new share.
     """
+    if start_date is None:
+        start_date = date.today()
     payload = dict(
         rt_number=int(rt_number),
         share_directory=str(share_directory),
         email_addresses=email_addresses,
         number_of_files=no_of_files,
         total_file_size=t_file_size,
-        registration_date=str(date.today()),
+        registration_date=str(start_date),
     )
     destination = pathlib.Path(metadata_root) / "active" / f"{rt_number}_initial.yaml"
     directory = destination.parent
