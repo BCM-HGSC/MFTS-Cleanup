@@ -24,6 +24,7 @@ def new_share(
     """
     if start_date is None:
         start_date = date.today()
+    assert share_directory.is_dir(), share_directory
     no_of_files, t_file_size = get_directory_totals(share_directory)
     payload = dict(
         rt_number=int(rt_number),
