@@ -14,7 +14,7 @@ from yaml import dump, safe_load
 def new_share(
     metadata_root,
     rt_number,
-    share_directory,
+    share_directory: pathlib.Path,
     email_addresses,
     no_of_files,
     t_file_size,
