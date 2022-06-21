@@ -47,10 +47,7 @@ def get_directory_totals(directory_path):
 def register_share():
     args = parse_register_command_line()
     config = load_config(args.config_file_path)
-    # f_num_size = get_directory_totals(".")
-    no_of_files = get_directory_totals(".")[0]
-    t_file_size = get_directory_totals(".")[1]
-
+    no_of_files, t_file_size = get_directory_totals(args.share_directory_path)
     new_share(
         config.metadata_root,
         args.rt_number,

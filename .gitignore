@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # Local files
-/check-and-clean-dirs*
+/test_config.yaml
+/.vscode
