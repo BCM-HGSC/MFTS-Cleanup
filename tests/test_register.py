@@ -32,9 +32,3 @@ share_directory: build/test/rt1234
 total_file_size: 99
 """
     assert yaml_path.read_text() == EXPECTED_YAML
-
-
-def test_b():
-    expected = 4
-    expression = 2 + 2
-    assert expression == expected
