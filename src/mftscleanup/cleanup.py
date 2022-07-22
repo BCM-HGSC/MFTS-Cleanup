@@ -74,11 +74,3 @@ def process_share(rt_share_info, today):
         print("yaml_file3")
     else:
         print("no action required")
-
-
-def get_share_status(active_dir, share_name, date):
-    # this function will reach a conclusion for the status of a share based on the date it was registered.
-    pass
-
-
-# return "action"
