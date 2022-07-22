@@ -3,38 +3,32 @@ from pathlib import Path
 from textwrap import dedent
 
 from mftscleanup import cleanup
+from helpers import FakeShare
 
 
-def test_new_share_happy_path(tmp_path: Path):
+def test_new_share_happy_path(rt1234: FakeShare):
     # Phase 1: setup.
-    root = tmp_path
-    active = root / "active"
-    share = root / "rt1234"
-    active.mkdir()
-    share.mkdir()
-    dummy_file = share / "dummy.txt"
-    dummy_file.write_bytes(b"hello\n")
-    print(repr(active))
+    pass  # Alreadly handled in rt1234.
     # Phase 2: run the code you are testing.
     cleanup.new_share(
-        root,
+        rt1234.scenario.metadata_root,
         "1234",
-        share,
+        rt1234.share_root,
         ["fake@fake.com"],
         date(2020, 1, 1),
     )
     # Phase 3: check the results.
-    yaml_path = active / "1234_initial.yaml"
+    yaml_path = rt1234.scenario.active / "1234_initial.yaml"
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
         email_addresses:
         - fake@fake.com
-        number_of_files: 1
+        number_of_files: {rt1234.num_files}
         registration_date: '2020-01-01'
-        rt_number: 1234
-        share_directory: {share}
-        total_file_size: 6
+        rt_number: {rt1234.rt_number}
+        share_directory: {rt1234.share_root}
+        total_file_size: {rt1234.num_bytes}
         """
     )
     assert yaml_path.read_text() == EXPECTED_YAML
