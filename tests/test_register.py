@@ -5,12 +5,11 @@ from textwrap import dedent
 from mftscleanup import cleanup
 
 
-def test_new_share_happy_path(tmp_path: Path):
+def test_new_share_happy_path(directory_skeleton: Path):
     # Phase 1: setup.
-    root = tmp_path
+    root = directory_skeleton / "metadata_root"
     active = root / "active"
-    share = root / "rt1234"
-    active.mkdir()
+    share = directory_skeleton / "data" / "rt1234"
     share.mkdir()
     dummy_file = share / "dummy.txt"
     dummy_file.write_bytes(b"hello\n")
