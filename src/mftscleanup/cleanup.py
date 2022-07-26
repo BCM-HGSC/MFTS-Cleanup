@@ -5,8 +5,8 @@ Operates just below command line parsing.
 
 
 from datetime import date, timedelta
-from os import access
 import pathlib
+from os.path import getsize
 
 from addict import Dict
 from yaml import dump, safe_load
@@ -15,10 +15,8 @@ from yaml import dump, safe_load
 def new_share(
     metadata_root,
     rt_number,
-    share_directory,
+    share_directory: pathlib.Path,
     email_addresses,
-    no_of_files,
-    t_file_size,
     start_date=None,
 ):
     """
@@ -26,6 +24,8 @@ def new_share(
     """
     if start_date is None:
         start_date = date.today()
+    assert share_directory.is_dir(), share_directory
+    no_of_files, t_file_size = get_directory_totals(share_directory)
     payload = dict(
         rt_number=int(rt_number),
         share_directory=str(share_directory),
@@ -38,6 +38,15 @@ def new_share(
     directory = destination.parent
     directory.mkdir(parents=True, exist_ok=True)
     destination.write_text(dump(payload), encoding="UTF-8")
+
+
+def get_directory_totals(top: pathlib.Path):
+    num_files = total_size = 0
+    for p in list(top.rglob("*")):
+        if p.is_file():
+            num_files += 1
+            total_size += getsize(p)
+    return num_files, total_size
 
 
 def process_active_shares(metadata_root, from_address, email_host):

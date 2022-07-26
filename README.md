@@ -41,7 +41,7 @@ logging:
       -  1 week warning
   - RT#____second_email.yaml 
       -  48 hr warning
-  - RT#____24hr_final_email.yaml
+  - RT#____final_email.yaml
       -  24 hr warning
   - RT#_____deleted_email.yaml
       -  Email has now been deleted.

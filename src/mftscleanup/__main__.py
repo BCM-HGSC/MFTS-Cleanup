@@ -6,7 +6,6 @@ a script by running:
 
 import argparse, os
 
-from os.path import getsize
 from pathlib import Path
 from sys import argv
 from textwrap import dedent
@@ -34,27 +33,14 @@ def main():
     #     print(p)
 
 
-def get_directory_totals(directory_path):
-    top = Path(directory_path)
-    num_files = total_size = 0
-    for p in list(top.rglob("*")):
-        if p.is_file():
-            num_files += 1
-            total_size += getsize(p)
-    return num_files, total_size
-
-
 def register_share():
     args = parse_register_command_line()
     config = load_config(args.config_file_path)
-    no_of_files, t_file_size = get_directory_totals(args.share_directory_path)
     new_share(
         config.metadata_root,
         args.rt_number,
         args.share_directory_path,
         args.email_addresses,
-        no_of_files,
-        t_file_size,
     )
 
 
