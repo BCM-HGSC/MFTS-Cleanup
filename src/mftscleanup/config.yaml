@@ -1,7 +1,0 @@
-# Arguments for testing
-metadata_root: build/test/dummy
-email:
-  from_address: SENDER@bcm.edu
-  host: SMTP.SERVER.DOMAIN
-logging:
-  level: INFO
