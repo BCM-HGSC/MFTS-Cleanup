@@ -1,7 +1,7 @@
 from datetime import date
 from pathlib import Path
 
-from pytest import mark
+from pytest import mark, raises
 from yaml import safe_load
 
 from helpers import FakeShare, Scenario
@@ -45,6 +45,24 @@ def test_get_next_value_final_email():
 @mark.xfail
 def test_get_next_value_cleanup():
     assert state.get_next_state(state.State.cleanup) is None
+
+
+@mark.xfail
+def test_get_next_value_illegal():
+    with raises(TypeError):
+        state.get_next_state("initial")
+
+
+@mark.xfail
+def test_get_next_value_illegal():
+    with raises(TypeError):
+        state.get_next_state(None)
+
+
+@mark.xfail
+def test_get_next_value_illegal():
+    with raises(TypeError):
+        state.get_next_state(False)
 
 
 def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
