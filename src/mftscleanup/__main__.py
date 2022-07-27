@@ -1,14 +1,27 @@
 """
-By naming the top-level module __main__, it is possible to run this module as
-a script by running:
-`python -m mftscleanup [args...]`
+This is the CLI interface. This module is responsible for just:
+
+- parsing the config file
+- parsing the command line
+- configuring logging
+
+Application logic starts in cleanup.py.
+
+There are 4 ways to run the code here:
+
+1. Use one of the console_scripts defined in setup.cfg.
+2. `python -m mftscleanup [args...]`
+3. `python path/to/code/src [args...]`
+4. `python path/to/code/src/mftscleanup [args...]`
+
+Since there are more than one console_scripts, calling this module directly
+requires specify which command is intended.
 """
 
 import argparse, os
 
 from pathlib import Path
-from sys import argv
-from textwrap import dedent
+from sys import argv, stderr
 
 from addict import Dict
 import yaml
@@ -18,19 +31,20 @@ from .cleanup import new_share, process_active_shares
 
 
 def main():
-    print(
-        dedent(
-            f"""\
-            {__package__=} (v{__version__})
-            {__name__=} @ {__file__}
-
-            {argv=}
-            """  # This f-string syntax requires 3.8+
-        )
-    )
-    print("this is a test")
-    # for p in path:
-    #     print(p)
+    if len(argv) < 2:
+        command = "--help"
+    else:
+        command = argv[1]
+        del argv[1]
+    if command == "--help":
+        print("required: COMMAND CONFIG_FILE ...", file=stderr)
+        print("    COMMAND = new | auto", file=stderr)
+    elif command == "new":
+        return register_share()
+    elif command == "auto":
+        return auto_cleanup()
+    else:
+        print(f"bad command: {command}. See --help.", file=stderr)
 
 
 def register_share():
