@@ -115,17 +115,14 @@ def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
         assert (scenario.data / p).read_bytes() == b"hello\n"
 
 
-@mark.xfail
 def test_get_active_shares_none(scenario: Scenario):
     assert list(state.get_active_shares(scenario.active)) == []
 
 
-@mark.xfail
 def test_get_active_shares_rt1234_initial(rt1234_initial: FakeShare):
     assert list(state.get_active_shares(rt1234_initial.scenario.active)) == ["rt1234"]
 
 
-@mark.xfail
 def test_get_active_shares_rt1234_initial_rt5678_pre(
     rt1234_initial: FakeShare, rt5678: FakeShare
 ):

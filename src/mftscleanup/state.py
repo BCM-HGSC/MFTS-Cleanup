@@ -21,7 +21,11 @@ def get_active_shares(active_dir: Path) -> Iterator[str]:
     """
     Return the names (eg. "rt1234") of all the active shares.
     """
-    raise NotImplementedError  # TODO
+    shares = []
+    for yaml_file_path in active_dir.glob("*.yaml"):
+        share_name = "rt" + yaml_file_path.stem.removesuffix("_initial")
+        shares.append(share_name)
+    return shares
 
 
 def get_share_state(active_dir: Path, share_name: str) -> tuple[State, date]:
