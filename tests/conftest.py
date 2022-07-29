@@ -30,5 +30,4 @@ def rt5678(scenario: Scenario) -> FakeShare:
 @fixture
 def rt1234_initial(rt1234: FakeShare) -> FakeShare:
     rt1234.write_initial_yaml("2020-01-01")
-    # initial_yaml(rt1234, 1234, "2020-01-01")
     return rt1234
