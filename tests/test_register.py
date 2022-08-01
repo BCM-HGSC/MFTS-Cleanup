@@ -18,7 +18,7 @@ def test_new_share_happy_path(rt1234: FakeShare):
         date(2020, 1, 1),
     )
     # Phase 3: check the results.
-    yaml_path = rt1234.scenario.active / "1234_initial.yaml"
+    yaml_path = rt1234.scenario.active / "rt1234_initial.yaml"
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\

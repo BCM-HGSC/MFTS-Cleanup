@@ -34,7 +34,7 @@ def new_share(
         total_file_size=t_file_size,
         registration_date=str(start_date),
     )
-    destination = pathlib.Path(metadata_root) / "active" / f"{rt_number}_initial.yaml"
+    destination = pathlib.Path(metadata_root) / "active" / f"rt{rt_number}_initial.yaml"
     directory = destination.parent
     directory.mkdir(parents=True, exist_ok=True)
     destination.write_text(dump(payload), encoding="UTF-8")

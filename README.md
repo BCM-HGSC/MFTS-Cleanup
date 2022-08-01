@@ -37,13 +37,13 @@ logging:
 
 - Directory used will be archived into a new directory. 
   - will have a new naming convention
-  - RT#____first_email.yaml 
+  - rt{rt_number}_first_email.yaml 
       -  1 week warning
-  - RT#____second_email.yaml 
+  - rt{rt_number}_second_email.yaml 
       -  48 hr warning
-  - RT#____final_email.yaml
+  - rt{rt_number}_final_email.yaml
       -  24 hr warning
-  - RT#_____deleted_email.yaml
+  - rt{rt_number}__deleted_email.yaml
       -  Email has now been deleted.
   
 
@@ -57,28 +57,28 @@ Example cron command:
 ## Metadata Root Layout
 
 Files will be organized by the following possible files:
-    - RT#____initial.yaml 
+    - rt{rt_number}_initial.yaml 
         - A new share has been recorded by creating this file along with its registration date.
-    - RT#____first_email.yaml
+    - rt{rt_number}_first_email.yaml
         - First email will be sent 3 weeks after the share has been registered along with the creation of this file.
-    - RT#____second_email.yaml
+    - rt{rt_number}_second_email.yaml
         - A second email will be sent 3 weeks and 4 days after registration date along with the creation of this file. 
-    - RT#____final_email.yaml
+    - rt{rt_number}_final_email.yaml
         - A final email will be sent 3 weeks and 6 days after registration date along with the creation of this file.
-    - RT#___cleanup.yaml
+    - rt{rt_number}_cleanup.yaml
         - 4 weeks after registration, a cleanup file will be created followed by the cleaning up of the directory.
 
 
 ## Shares will be categorized by the two following directories:
 
 - # active
-    - 5678_initial.yaml 
-    - 5678_first_email.yaml
+    - rt5678_initial.yaml 
+    - rt5678_first_email.yaml
     - ...
 - # archive
-    - 1234_initial.yaml
-    - 1234_first_email.yaml
-    - 1234_second_email.yaml
-    - 1234_final_email.yaml
-    - 1234_cleanup.yaml
+    - rt1234_initial.yaml
+    - rt1234_first_email.yaml
+    - rt1234_second_email.yaml
+    - rt1234_final_email.yaml
+    - rt1234_cleanup.yaml
     - ...
