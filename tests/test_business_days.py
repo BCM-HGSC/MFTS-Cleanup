@@ -60,3 +60,22 @@ def test_mlk_day():
     start = D2020_01_06  # Monday
     assert add_business_days(start, 10) == D(2020, 1, 21)  # Tuesday
     assert add_business_days(start, 15) == D(2020, 1, 28)  # Tuesday
+
+
+@mark.xfail
+def test_black_friday():
+    """
+    Start the Monday (2020-11-23) before Thanksgiving 2020-11-26.
+    We should skip over a 4-day weekend with the next business day being
+    2020-11-30 (Monday).
+    """
+    start = D(2020, 11, 23)  # Monday
+    assert add_business_days(start, 2) == D(2020, 11, 25)  # Wednesday
+    assert add_business_days(start, 3) == D(2020, 11, 30)  # Monday
+    # Start on the Monday before Thanksgiving each year:
+    assert add_business_days(D(2022, 11, 21), 3) == D(2022, 11, 28)
+    assert add_business_days(D(2023, 11, 20), 3) == D(2023, 11, 27)
+    assert add_business_days(D(2024, 11, 25), 3) == D(2024, 12, 2)
+    assert add_business_days(D(2025, 11, 24), 3) == D(2025, 12, 1)
+    assert add_business_days(D(2027, 11, 22), 3) == D(2027, 11, 29)
+    assert add_business_days(D(2029, 11, 19), 3) == D(2029, 11, 26)
