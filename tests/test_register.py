@@ -24,8 +24,8 @@ def test_new_share_happy_path(rt1234: FakeShare):
         f"""\
         email_addresses:
         - fake@fake.com
+        initial_date: '2020-01-01'
         number_of_files: {rt1234.num_files}
-        registration_date: '2020-01-01'
         rt_number: {rt1234.rt_number}
         share_directory: {rt1234.share_root}
         total_file_size: {rt1234.num_bytes}

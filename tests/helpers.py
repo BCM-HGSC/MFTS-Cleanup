@@ -58,7 +58,7 @@ class FakeShare:
         self.num_bytes += len(payload)
         return dummy_file
 
-    def write_initial_yaml(self, registration_date) -> Path:
+    def write_initial_yaml(self, initial_date) -> Path:
         assert list(self.share_root.glob("*")), f"empty dir {self.share_root}"
         # TODO: Define correct behavior for empty share directory. Right now, we
         # just require that all test cases contain some data.
@@ -67,8 +67,8 @@ class FakeShare:
             f"""\
             email_addresses:
             - fake@fake.com
+            initial_date: '{initial_date}'
             number_of_files: {self.num_files}
-            registration_date: '{registration_date}'
             rt_number: {self.rt_number}
             share_directory: {self.share_root}
             total_file_size: {self.num_bytes}
