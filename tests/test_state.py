@@ -101,8 +101,8 @@ def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
     assert rt1234_share_directory == str(scenario.data / "rt1234")
     assert yaml_data == {
         "email_addresses": ["fake@fake.com"],
+        "initial_date": "2020-01-01",
         "number_of_files": 1,
-        "registration_date": "2020-01-01",
         "rt_number": 1234,
         "total_file_size": 6,
     }

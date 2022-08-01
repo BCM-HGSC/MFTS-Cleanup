@@ -30,11 +30,11 @@ def new_share(
         rt_number=int(rt_number),
         share_directory=str(share_directory),
         email_addresses=email_addresses,
+        initial_date=str(start_date),
         number_of_files=no_of_files,
         total_file_size=t_file_size,
-        registration_date=str(start_date),
     )
-    destination = pathlib.Path(metadata_root) / "active" / f"{rt_number}_initial.yaml"
+    destination = pathlib.Path(metadata_root) / "active" / f"rt{rt_number}_initial.yaml"
     directory = destination.parent
     directory.mkdir(parents=True, exist_ok=True)
     destination.write_text(dump(payload), encoding="UTF-8")
@@ -61,16 +61,16 @@ def process_active_shares(metadata_root, from_address, email_host):
 
 def process_share(rt_share_info, today):
     print(rt_share_info)
-    registration_date = date.fromisoformat(rt_share_info.registration_date)
-    print(repr(registration_date), repr(today))
+    initial_date = date.fromisoformat(rt_share_info.initial_date)
+    print(repr(initial_date), repr(today))
 
-    if (today) - (registration_date) < timedelta(21):
+    if (today) - (initial_date) < timedelta(21):
         print("not enough time")
-    elif (today) - (registration_date) == timedelta(21):
+    elif (today) - (initial_date) == timedelta(21):
         print("yaml_file1")
-    elif (today) - (registration_date) == timedelta(25):
+    elif (today) - (initial_date) == timedelta(25):
         print("yaml_file2")
-    elif (today) - (registration_date) == timedelta(27):
+    elif (today) - (initial_date) == timedelta(27):
         print("yaml_file3")
     else:
         print("no action required")
