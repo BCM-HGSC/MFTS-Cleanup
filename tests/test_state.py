@@ -78,8 +78,8 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
         |       `-- dummy_5678_a.txt
         `-- metadata_root
             |-- active
-            |   |-- rt1234_first_email.yaml
-            |   `-- rt1234_initial.yaml
+            |   |-- rt1234_0000.yaml
+            |   `-- rt1234_0001.yaml
             `-- archive
 
     Linkages:
@@ -96,7 +96,7 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
     assert not list(scenario.archive.glob("*"))
     meta_files = list(scenario.active.glob("*"))
     meta_file_names = sorted(p.name for p in meta_files)
-    assert meta_file_names == ["1234_first_email.yaml", "1234_initial.yaml"]
+    assert meta_file_names == ["rt1234_0000.yaml", "rt1234_0001.yaml"]
     yaml_data: dict = safe_load(meta_files[0].read_text(encoding="ascii"))
     rt1234_share_directory = yaml_data.pop("share_directory")
     assert rt1234_share_directory == str(scenario.data / "rt1234")
@@ -105,6 +105,7 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
         "initial_date": "2020-01-01",
         "number_of_files": 1,
         "rt_number": 1234,
+        "state": "initial",
         "total_file_size": 6,
     }
     data_paths = sorted(p for p in scenario.data.rglob("*") if p.is_file())
@@ -130,7 +131,6 @@ def test_get_active_shares_rt1234_initial_rt5678_pre(
     assert list(state.get_active_shares(rt1234_initial.scenario.active)) == ["rt1234"]
 
 
-@mark.xfail
 def test_get_active_shares_rt1234_first_email(rt1234_first_email: FakeShare):
     assert list(state.get_active_shares(rt1234_first_email.scenario.active)) == [
         "rt1234"

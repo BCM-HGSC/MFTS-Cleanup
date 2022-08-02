@@ -32,9 +32,10 @@ def new_share(
         email_addresses=email_addresses,
         initial_date=str(start_date),
         number_of_files=no_of_files,
+        state="initial",
         total_file_size=t_file_size,
     )
-    destination = pathlib.Path(metadata_root) / "active" / f"rt{rt_number}_initial.yaml"
+    destination = pathlib.Path(metadata_root) / "active" / f"rt{rt_number}_0000.yaml"
     directory = destination.parent
     directory.mkdir(parents=True, exist_ok=True)
     destination.write_text(dump(payload), encoding="UTF-8")

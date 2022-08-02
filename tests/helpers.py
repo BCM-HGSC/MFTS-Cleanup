@@ -62,7 +62,7 @@ class FakeShare:
         assert list(self.share_root.glob("*")), f"empty dir {self.share_root}"
         # TODO: Define correct behavior for empty share directory. Right now, we
         # just require that all test cases contain some data.
-        initial_yaml_file = self.scenario.active / f"{self.rt_number}_initial.yaml"
+        initial_yaml_file = self.scenario.active / f"rt{self.rt_number}_0000.yaml"
         yaml_text = dedent(
             f"""\
             email_addresses:
@@ -71,6 +71,7 @@ class FakeShare:
             number_of_files: {self.num_files}
             rt_number: {self.rt_number}
             share_directory: {self.share_root}
+            state: initial
             total_file_size: {self.num_bytes}
             """
         )
@@ -78,13 +79,13 @@ class FakeShare:
         return initial_yaml_file
 
     def write_first_email_yaml(self, first_email_date) -> Path:
-        return self.write_state_yaml("first_email", first_email_date)
+        return self.write_state_yaml("0001", first_email_date, "first_email")
 
-    def write_state_yaml(self, state_name: str, state_date: str, ) -> Path:
-        yaml_file_path = self.scenario.active / f"{self.rt_number}_{state_name}.yaml"
+    def write_state_yaml(self, event_id: str, event_date: str, state_name: str) -> Path:
+        yaml_file_path = self.scenario.active / f"rt{self.rt_number}_{event_id}.yaml"
         yaml_text = dedent(
             f"""\
-            {state_name}_date: '{state_date}'
+            {state_name}_date: '{event_date}'
             rt_number: {self.rt_number}
             """
         )
