@@ -15,14 +15,14 @@ def scenario(tmp_path: Path) -> Scenario:
 
 @fixture
 def rt1234(scenario: Scenario) -> FakeShare:
-    share = scenario.new_share(1234)
+    share = scenario.new_share("rt1234")
     share.write_dummy_data()
     return share
 
 
 @fixture
 def rt5678(scenario: Scenario) -> FakeShare:
-    share = scenario.new_share(5678)
+    share = scenario.new_share("rt5678")
     share.write_dummy_data()
     return share
 

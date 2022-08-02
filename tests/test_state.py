@@ -104,14 +104,14 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
         "email_addresses": ["fake@fake.com"],
         "initial_date": "2020-01-01",
         "number_of_files": 1,
-        "rt_number": 1234,
+        "share_id": "rt1234",
         "state": "initial",
         "total_file_size": 6,
     }
     data_paths = sorted(p for p in scenario.data.rglob("*") if p.is_file())
     assert [str(p.relative_to(scenario.data)) for p in data_paths] == [
-        "rt1234/dummy_1234_a.txt",
-        "rt5678/dummy_5678_a.txt",
+        "rt1234/dummy_rt1234_a.txt",
+        "rt5678/dummy_rt5678_a.txt",
     ]
     for p in data_paths:
         assert (scenario.data / p).read_bytes() == b"hello\n"

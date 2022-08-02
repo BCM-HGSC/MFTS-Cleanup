@@ -12,7 +12,7 @@ def test_new_share_happy_path(rt1234: FakeShare):
     # Phase 2: run the code you are testing.
     cleanup.new_share(
         rt1234.scenario.metadata_root,
-        "1234",
+        "rt1234",
         rt1234.share_root,
         ["fake@fake.com"],
         date(2020, 1, 1),
@@ -26,8 +26,8 @@ def test_new_share_happy_path(rt1234: FakeShare):
         - fake@fake.com
         initial_date: '2020-01-01'
         number_of_files: {rt1234.num_files}
-        rt_number: {rt1234.rt_number}
         share_directory: {rt1234.share_root}
+        share_id: {rt1234.share_id}
         state: initial
         total_file_size: {rt1234.num_bytes}
         """

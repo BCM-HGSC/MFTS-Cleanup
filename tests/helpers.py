@@ -34,15 +34,15 @@ class Scenario:
         for p in (self.data, self.active, self.archive):
             p.mkdir(parents=True, exist_ok=True)
 
-    def new_share(self, rt_number) -> "FakeShare":
-        return FakeShare(self, rt_number=rt_number)
+    def new_share(self, share_id: str) -> "FakeShare":
+        return FakeShare(self, share_id)
 
 
 class FakeShare:
-    def __init__(self, scenario: Scenario, rt_number: int):
+    def __init__(self, scenario: Scenario, share_id: str):
         self.scenario = scenario
-        self.rt_number = rt_number
-        self.share_root = self.scenario.data / f"rt{rt_number}"
+        self.share_id = share_id
+        self.share_root = self.scenario.data / f"{self.share_id}"
         self.share_root.mkdir()
         self.num_files = 0
         self.num_bytes = 0
@@ -52,7 +52,7 @@ class FakeShare:
         assert letter not in self.dummy_letters_used, f"re-used '{letter}'"
         self.dummy_letters_used.add(letter)
         payload = b"hello\n"
-        dummy_file = self.share_root / f"dummy_{self.rt_number}_{letter}.txt"
+        dummy_file = self.share_root / f"dummy_{self.share_id}_{letter}.txt"
         dummy_file.write_bytes(payload)
         self.num_files += 1
         self.num_bytes += len(payload)
@@ -62,14 +62,14 @@ class FakeShare:
         assert list(self.share_root.glob("*")), f"empty dir {self.share_root}"
         # TODO: Define correct behavior for empty share directory. Right now, we
         # just require that all test cases contain some data.
-        initial_yaml_file = self.scenario.active / f"rt{self.rt_number}_0000.yaml"
+        initial_yaml_file = self.scenario.active / f"{self.share_id}_0000.yaml"
         yaml_text = dedent(
             f"""\
             email_addresses:
             - fake@fake.com
             initial_date: '{initial_date}'
             number_of_files: {self.num_files}
-            rt_number: {self.rt_number}
+            share_id: {self.share_id}
             share_directory: {self.share_root}
             state: initial
             total_file_size: {self.num_bytes}
@@ -82,11 +82,11 @@ class FakeShare:
         return self.write_state_yaml("0001", first_email_date, "first_email")
 
     def write_state_yaml(self, event_id: str, event_date: str, state_name: str) -> Path:
-        yaml_file_path = self.scenario.active / f"rt{self.rt_number}_{event_id}.yaml"
+        yaml_file_path = self.scenario.active / f"{self.share_id}_{event_id}.yaml"
         yaml_text = dedent(
             f"""\
             {state_name}_date: '{event_date}'
-            rt_number: {self.rt_number}
+            share_id: {self.share_id}
             """
         )
         yaml_file_path.write_text(yaml_text)
