@@ -44,7 +44,7 @@ logging:
   - rt{rt_number}_final_email.yaml
       -  24 hr warning
   - rt{rt_number}__deleted_email.yaml
-      -  Email has now been deleted.
+      -  Data has now been deleted.
   
 
 ## CRON JOB
