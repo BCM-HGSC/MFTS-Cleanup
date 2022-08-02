@@ -76,3 +76,17 @@ class FakeShare:
         )
         initial_yaml_file.write_text(yaml_text)
         return initial_yaml_file
+
+    def write_first_email_yaml(self, first_email_date) -> Path:
+        return self.write_state_yaml("first_email", first_email_date)
+
+    def write_state_yaml(self, state_name: str, state_date: str, ) -> Path:
+        yaml_file_path = self.scenario.active / f"{self.rt_number}_{state_name}.yaml"
+        yaml_text = dedent(
+            f"""\
+            {state_name}_date: '{state_date}'
+            rt_number: {self.rt_number}
+            """
+        )
+        yaml_file_path.write_text(yaml_text)
+        return yaml_file_path

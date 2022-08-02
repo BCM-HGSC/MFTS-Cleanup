@@ -65,21 +65,22 @@ def test_get_next_value_illegal():
         state.get_next_state(False)
 
 
-def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
+def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
     """
     Make sure the fixtures do what we expect:
 
     Expected layout:
-    |-- test_metadata_fixtures0
-    |   |-- data
-    |   |   |-- rt1234
-    |   |   |   `-- dummy_1234_a.txt
-    |   |   `-- rt5678
-    |   |       `-- dummy_5678_a.txt
-    |   `-- metadata_root
-    |       |-- active
-    |       |   `-- rt1234_initial.yaml
-    |       `-- archive
+    `-- test_metadata_fixtures0
+        |-- data
+        |   |-- rt1234
+        |   |   `-- dummy_1234_a.txt
+        |   `-- rt5678
+        |       `-- dummy_5678_a.txt
+        `-- metadata_root
+            |-- active
+            |   |-- rt1234_first_email.yaml
+            |   `-- rt1234_initial.yaml
+            `-- archive
 
     Linkages:
     - fixtures link to scenario correctly
@@ -89,13 +90,13 @@ def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
     - the one YAML file is correct
     - data files are correct
     """
-    scenario = rt1234_initial.scenario
+    scenario = rt1234_first_email.scenario
     assert scenario.root.is_dir(), scenario
     assert rt5678.scenario is scenario
     assert not list(scenario.archive.glob("*"))
     meta_files = list(scenario.active.glob("*"))
-    meta_file_names = [p.name for p in meta_files]
-    assert meta_file_names == ["1234_initial.yaml"]
+    meta_file_names = sorted(p.name for p in meta_files)
+    assert meta_file_names == ["1234_first_email.yaml", "1234_initial.yaml"]
     yaml_data: dict = safe_load(meta_files[0].read_text(encoding="ascii"))
     rt1234_share_directory = yaml_data.pop("share_directory")
     assert rt1234_share_directory == str(scenario.data / "rt1234")
@@ -127,3 +128,10 @@ def test_get_active_shares_rt1234_initial_rt5678_pre(
     rt1234_initial: FakeShare, rt5678: FakeShare
 ):
     assert list(state.get_active_shares(rt1234_initial.scenario.active)) == ["rt1234"]
+
+
+@mark.xfail
+def test_get_active_shares_rt1234_first_email(rt1234_first_email: FakeShare):
+    assert list(state.get_active_shares(rt1234_first_email.scenario.active)) == [
+        "rt1234"
+    ]
