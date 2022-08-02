@@ -78,7 +78,7 @@ def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
     |   |       `-- dummy_5678_a.txt
     |   `-- metadata_root
     |       |-- active
-    |       |   `-- 1234_initial.yaml
+    |       |   `-- rt1234_initial.yaml
     |       `-- archive
 
     Linkages:
