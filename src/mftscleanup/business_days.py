@@ -10,18 +10,14 @@ import holidays
 ONE_DAY = timedelta(days=1)
 
 def add_business_days(start: date, num_businessdays: int) -> date:
-    business_days_weekends_holidays = num_businessdays #TODO: wip
     current_date = start
-    ONEDAY = timedelta(days=1)
-    while business_days_weekends_holidays > 0:
-        current_date = current_date.today()  #+= timedelta(days=1)
-        weekday = current_date.weekday() 
-        if weekday >=5: # sunday = 6 
-            ONEDAY # wip
-            #non weekend
-        for h in holidays.USA(h).items():
-            ONEDAY # wip
-            # holiday
-        else:
+    remaining_business_days = num_businessdays
+    us_holidays = holidays.USA()
+    while remaining_business_days > 0:
+        current_date += ONE_DAY
+        if current_date.weekday() >=5: # sunday = 6 
+            continue  # weekend, so nothing to do
+        if current_date in us_holidays:
             continue # businessday (wip)
+        remaining_business_days -= 1
     return current_date

@@ -30,7 +30,6 @@ def test_simple_date_works_as_expected():
     assert D(2020, 1, 12).strftime("%a") == "Sun"  # Sunday
 
 
-@mark.xfail
 def test_simple_cases():
     """
     No holidays or weekends to worry about.
@@ -41,7 +40,6 @@ def test_simple_cases():
     assert add_business_days(start, 2) == D(2020, 1, 8)
 
 
-@mark.xfail
 def test_weekends():
     """
     Weekends.
@@ -52,7 +50,6 @@ def test_weekends():
     assert add_business_days(start, 9) == D(2020, 1, 17)  # Friday
 
 
-@mark.xfail
 def test_mlk_day():
     """
     MLK Day was 2020-01-20.
