@@ -59,7 +59,6 @@ def test_mlk_day():
     assert add_business_days(start, 15) == D(2020, 1, 28)  # Tuesday
 
 
-@mark.xfail
 def test_black_friday():
     """
     Start the Monday (2020-11-23) before Thanksgiving 2020-11-26.
