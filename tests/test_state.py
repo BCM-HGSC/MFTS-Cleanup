@@ -103,10 +103,10 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
     assert yaml_data == {
         "email_addresses": ["fake@fake.com"],
         "initial_date": "2020-01-01",
-        "number_of_files": 1,
+        "num_bytes": 6,
+        "num_files": 1,
         "share_id": "rt1234",
         "state": "initial",
-        "total_file_size": 6,
     }
     data_paths = sorted(p for p in scenario.data.rglob("*") if p.is_file())
     assert [str(p.relative_to(scenario.data)) for p in data_paths] == [

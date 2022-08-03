@@ -68,11 +68,11 @@ class FakeShare:
             email_addresses:
             - fake@fake.com
             initial_date: '{initial_date}'
-            number_of_files: {self.num_files}
+            num_bytes: {self.num_bytes}
+            num_files: {self.num_files}
             share_id: {self.share_id}
             share_directory: {self.share_root}
             state: initial
-            total_file_size: {self.num_bytes}
             """
         )
         initial_yaml_file.write_text(yaml_text)

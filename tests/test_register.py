@@ -25,11 +25,11 @@ def test_new_share_happy_path(rt1234: FakeShare):
         email_addresses:
         - fake@fake.com
         initial_date: '2020-01-01'
-        number_of_files: {rt1234.num_files}
+        num_bytes: {rt1234.num_bytes}
+        num_files: {rt1234.num_files}
         share_directory: {rt1234.share_root}
         share_id: {rt1234.share_id}
         state: initial
-        total_file_size: {rt1234.num_bytes}
         """
     )
     assert yaml_path.read_text() == EXPECTED_YAML

@@ -32,9 +32,9 @@ def new_share(
         share_directory=str(share_directory),
         email_addresses=email_addresses,
         initial_date=str(start_date),
-        number_of_files=no_of_files,
+        num_files=no_of_files,
         state="initial",
-        total_file_size=t_file_size,
+        num_bytes=t_file_size,
     )
     destination = Path(metadata_root) / "active" / f"{share_id}_0000.yaml"
     directory = destination.parent
