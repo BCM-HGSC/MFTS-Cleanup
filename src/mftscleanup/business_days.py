@@ -7,6 +7,8 @@ from datetime import date, timedelta
 import holidays
 
 
+ONE_DAY = timedelta(days=1)
+
 def add_business_days(start: date, num_businessdays: int) -> date:
     business_days_weekends_holidays = num_businessdays #TODO: wip
     current_date = start
