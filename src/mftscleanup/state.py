@@ -1,10 +1,34 @@
 from datetime import date
 from enum import Enum
+from functools import total_ordering
 from pathlib import Path
 from typing import Iterator, Union
 
 
-State = Enum("State", "initial first_email second_email final_email cleanup")
+@total_ordering
+class OrderingAndIncrementMixin:
+    """
+    Provides ordering on value. There is an exception that the "hold"
+    member must NOT be compared.
+    """
+
+    def __lt__(self, other):
+        if self.__class__ is other.__class__:
+            if "hold" in (self.name, other.name):
+                return NotImplemented
+            return self.value < other.value
+        return NotImplemented
+
+    @property
+    def next(self) -> Union["State", None]:
+        return get_next_state(self)
+
+
+State = Enum(
+    "State",
+    "initial first_email second_email final_email cleanup hold",
+    type=OrderingAndIncrementMixin,
+)
 
 
 def get_next_state(state: State) -> Union[State, None]:
@@ -12,7 +36,7 @@ def get_next_state(state: State) -> Union[State, None]:
     initial -> first_email -> second_email -> final_email -> cleanup -> None
 
     It is an error to call this with anything other than a State.
-    Calling with State.cleanup should return None.
+    Calling with State.cleanup or State.hold should return None.
     """
     if not isinstance(state, State):
         raise TypeError(f"bad state: {state!r}")
