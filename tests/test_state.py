@@ -65,21 +65,22 @@ def test_get_next_value_illegal():
         state.get_next_state(False)
 
 
-def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
+def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
     """
     Make sure the fixtures do what we expect:
 
     Expected layout:
-    |-- test_metadata_fixtures0
-    |   |-- data
-    |   |   |-- rt1234
-    |   |   |   `-- dummy_1234_a.txt
-    |   |   `-- rt5678
-    |   |       `-- dummy_5678_a.txt
-    |   `-- metadata_root
-    |       |-- active
-    |       |   `-- 1234_initial.yaml
-    |       `-- archive
+    `-- test_metadata_fixtures0
+        |-- data
+        |   |-- rt1234
+        |   |   `-- dummy_1234_a.txt
+        |   `-- rt5678
+        |       `-- dummy_5678_a.txt
+        `-- metadata_root
+            |-- active
+            |   |-- rt1234_0000.yaml
+            |   `-- rt1234_0001.yaml
+            `-- archive
 
     Linkages:
     - fixtures link to scenario correctly
@@ -89,44 +90,48 @@ def test_metadata_fixtures(rt1234_initial: FakeShare, rt5678: FakeShare):
     - the one YAML file is correct
     - data files are correct
     """
-    scenario = rt1234_initial.scenario
+    scenario = rt1234_first_email.scenario
     assert scenario.root.is_dir(), scenario
     assert rt5678.scenario is scenario
     assert not list(scenario.archive.glob("*"))
     meta_files = list(scenario.active.glob("*"))
-    meta_file_names = [p.name for p in meta_files]
-    assert meta_file_names == ["1234_initial.yaml"]
+    meta_file_names = sorted(p.name for p in meta_files)
+    assert meta_file_names == ["rt1234_0000.yaml", "rt1234_0001.yaml"]
     yaml_data: dict = safe_load(meta_files[0].read_text(encoding="ascii"))
     rt1234_share_directory = yaml_data.pop("share_directory")
     assert rt1234_share_directory == str(scenario.data / "rt1234")
     assert yaml_data == {
         "email_addresses": ["fake@fake.com"],
         "initial_date": "2020-01-01",
-        "number_of_files": 1,
-        "rt_number": 1234,
-        "total_file_size": 6,
+        "num_bytes": 6,
+        "num_files": 1,
+        "share_id": "rt1234",
+        "state": "initial",
     }
     data_paths = sorted(p for p in scenario.data.rglob("*") if p.is_file())
     assert [str(p.relative_to(scenario.data)) for p in data_paths] == [
-        "rt1234/dummy_1234_a.txt",
-        "rt5678/dummy_5678_a.txt",
+        "rt1234/dummy_rt1234_a.txt",
+        "rt5678/dummy_rt5678_a.txt",
     ]
     for p in data_paths:
         assert (scenario.data / p).read_bytes() == b"hello\n"
 
 
-@mark.xfail
 def test_get_active_shares_none(scenario: Scenario):
     assert list(state.get_active_shares(scenario.active)) == []
 
 
-@mark.xfail
 def test_get_active_shares_rt1234_initial(rt1234_initial: FakeShare):
     assert list(state.get_active_shares(rt1234_initial.scenario.active)) == ["rt1234"]
 
 
-@mark.xfail
 def test_get_active_shares_rt1234_initial_rt5678_pre(
     rt1234_initial: FakeShare, rt5678: FakeShare
 ):
     assert list(state.get_active_shares(rt1234_initial.scenario.active)) == ["rt1234"]
+
+
+def test_get_active_shares_rt1234_first_email(rt1234_first_email: FakeShare):
+    assert list(state.get_active_shares(rt1234_first_email.scenario.active)) == [
+        "rt1234"
+    ]

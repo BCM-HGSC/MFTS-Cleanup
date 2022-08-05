@@ -52,7 +52,7 @@ def register_share():
     config = load_config(args.config_file_path)
     new_share(
         config.metadata_root,
-        args.rt_number,
+        args.share_id,
         args.share_directory_path,
         args.email_addresses,
     )
@@ -69,6 +69,8 @@ def parse_register_command_line():
     parser.add_argument("share_directory_path", type=dir_path)
     parser.add_argument("email_addresses", nargs="+")
     args = parser.parse_args()
+
+    args.share_id = "rt" + args.rt_number
 
     print("Registering a new share:")
     for arg in vars(args):

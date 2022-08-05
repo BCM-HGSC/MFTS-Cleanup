@@ -36,15 +36,17 @@ logging:
 ## Emails leading to cleanup
 
 - Directory used will be archived into a new directory. 
-  - will have a new naming convention
-  - rt{rt_number}_first_email.yaml 
-      -  1 week warning
-  - rt{rt_number}_second_email.yaml 
-      -  48 hr warning
-  - rt{rt_number}_final_email.yaml
-      -  24 hr warning
-  - rt{rt_number}__deleted_email.yaml
-      -  Email has now been deleted.
+  - will have a new naming convention:
+    - rt{rt_number}_0000.yaml 
+        -  initial state
+    - rt{rt_number}_0001.yaml 
+        -  1 week warning
+    - rt{rt_number}_0002.yaml 
+        -  48 hr warning
+    - rt{rt_number}_0003.yaml
+        -  24 hr warning
+    - rt{rt_number}_0004.yaml
+        -  Data has now been deleted.
   
 
 ## CRON JOB
@@ -57,28 +59,29 @@ Example cron command:
 ## Metadata Root Layout
 
 Files will be organized by the following possible files:
-    - rt{rt_number}_initial.yaml 
-        - A new share has been recorded by creating this file along with its registration date.
-    - rt{rt_number}_first_email.yaml
-        - First email will be sent 3 weeks after the share has been registered along with the creation of this file.
-    - rt{rt_number}_second_email.yaml
-        - A second email will be sent 3 weeks and 4 days after registration date along with the creation of this file. 
-    - rt{rt_number}_final_email.yaml
-        - A final email will be sent 3 weeks and 6 days after registration date along with the creation of this file.
-    - rt{rt_number}_cleanup.yaml
-        - 4 weeks after registration, a cleanup file will be created followed by the cleaning up of the directory.
+
+- rt{rt_number}_0000.yaml 
+    - A new share has been recorded by creating this file along with its registration date.
+- rt{rt_number}_0001.yaml
+    - First email will be sent 3 weeks after the share has been registered along with the creation of this file.
+- rt{rt_number}_0002.yaml
+    - A second email will be sent 3 weeks and 4 days after registration date along with the creation of this file. 
+- rt{rt_number}_0003.yaml
+    - A final email will be sent 3 weeks and 6 days after registration date along with the creation of this file.
+- rt{rt_number}_0004.yaml
+    - 4 weeks after registration, a cleanup file will be created followed by the cleaning up of the directory.
 
 
 ## Shares will be categorized by the two following directories:
 
 - # active
-    - rt5678_initial.yaml 
-    - rt5678_first_email.yaml
+    - rt5678_0000.yaml 
+    - rt5678_0001.yaml
     - ...
 - # archive
-    - rt1234_initial.yaml
-    - rt1234_first_email.yaml
-    - rt1234_second_email.yaml
-    - rt1234_final_email.yaml
-    - rt1234_cleanup.yaml
+    - rt1234_0000.yaml
+    - rt1234_0001.yaml
+    - rt1234_0002.yaml
+    - rt1234_0003.yaml
+    - rt1234_0004.yaml
     - ...
