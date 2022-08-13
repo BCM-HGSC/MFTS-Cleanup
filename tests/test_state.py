@@ -22,45 +22,37 @@ def test_state_values():
     assert len(set(state.State)) == 5
 
 
-@mark.xfail
 def test_get_next_value_initial():
     assert state.get_next_state(state.State.initial) == state.State.first_email
 
 
-@mark.xfail
 def test_get_next_value_first_email():
     assert state.get_next_state(state.State.first_email) == state.State.second_email
 
 
-@mark.xfail
 def test_get_next_value_second_email():
     assert state.get_next_state(state.State.second_email) == state.State.final_email
 
 
-@mark.xfail
 def test_get_next_value_final_email():
     assert state.get_next_state(state.State.final_email) == state.State.cleanup
 
 
-@mark.xfail
 def test_get_next_value_cleanup():
     assert state.get_next_state(state.State.cleanup) is None
 
 
-@mark.xfail
-def test_get_next_value_illegal():
+def test_get_next_value_illegal_str():
     with raises(TypeError):
         state.get_next_state("initial")
 
 
-@mark.xfail
-def test_get_next_value_illegal():
+def test_get_next_value_illegal_None():
     with raises(TypeError):
         state.get_next_state(None)
 
 
-@mark.xfail
-def test_get_next_value_illegal():
+def test_get_next_value_illegal_false():
     with raises(TypeError):
         state.get_next_state(False)
 

@@ -14,7 +14,12 @@ def get_next_state(state: State) -> Union[State, None]:
     It is an error to call this with anything other than a State.
     Calling with State.cleanup should return None.
     """
-    raise NotImplementedError  # TODO
+    if not isinstance(state, State):
+        raise TypeError(f"bad state: {state!r}")
+    value = state.value
+    if value < State.cleanup.value:
+        return State(value + 1)
+    return None
 
 
 def get_active_shares(active_dir: Path) -> Iterator[str]:
