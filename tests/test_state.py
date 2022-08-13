@@ -13,13 +13,45 @@ def test_state_values():
     Verify that we have a State Enum class (or equivalent) with the necessary.
     """
     names = [s.name for s in state.State]
-    assert names == ["initial", "first_email", "second_email", "final_email", "cleanup"]
+    assert names == [
+        "initial",
+        "first_email",
+        "second_email",
+        "final_email",
+        "cleanup",
+        "hold",
+    ]
     assert state.State.initial
     assert state.State.first_email
     assert state.State.second_email
     assert state.State.final_email
     assert state.State.cleanup
-    assert len(set(state.State)) == 5
+    assert state.State.hold
+    assert len(set(state.State)) == 6
+
+
+def test_state_ordering():
+    S = state.State
+    assert S.initial < S.first_email
+    assert S.first_email < S.second_email
+    assert S.second_email < S.final_email
+    assert S.final_email < S.cleanup
+    with raises(TypeError):  # Order comparisons to S.hold is not supported.
+        S.initial < S.hold
+    assert S.hold is S.hold
+    assert S.hold == S.hold
+    assert S.initial != S.hold
+    with raises(TypeError):
+        S.cleanup < 9
+
+
+def test_state_next_property():
+    assert state.State.initial.next == state.State.first_email
+    assert state.State.first_email.next == state.State.second_email
+    assert state.State.second_email.next == state.State.final_email
+    assert state.State.final_email.next == state.State.cleanup
+    assert state.State.cleanup.next is None
+    assert state.State.hold.next is None
 
 
 def test_get_next_value_initial():
