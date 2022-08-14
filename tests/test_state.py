@@ -1,10 +1,10 @@
-from datetime import date
+from datetime import date as D
 from pathlib import Path
 
 from pytest import mark, raises
 from yaml import safe_load
 
-from helpers import FakeShare, Scenario
+from helpers import FakeShare, get_new_state_yaml, Scenario
 from mftscleanup import state
 
 
@@ -159,3 +159,54 @@ def test_get_active_shares_rt1234_first_email(rt1234_first_email: FakeShare):
     assert list(state.get_active_shares(rt1234_first_email.scenario.active)) == [
         "rt1234"
     ]
+
+
+def test_get_share_state_rt1234_initial(rt1234_initial: FakeShare):
+    result = state.get_share_state(rt1234_initial.scenario.active, "rt1234")
+    assert result == (state.State.initial, D(2020, 1, 1))
+
+
+def test_get_share_state_rt1234_first_email(rt1234_first_email: FakeShare):
+    result = state.get_share_state(rt1234_first_email.scenario.active, "rt1234")
+    assert result == (state.State.first_email, D(2020, 1, 23))
+
+
+def test_get_share_state_rt1234_not_dict(rt1234: FakeShare):
+    rt1234.write_event_file("0000", "hello there")
+    with raises(state.EventNotDictError):
+        state.get_share_state(rt1234.scenario.active, "rt1234")
+
+
+def test_get_share_state_rt1234_corrupt(rt1234: FakeShare):
+    rt1234.write_event_file("0000", "]")
+    with raises(state.EventFileCorruptError):
+        state.get_share_state(rt1234.scenario.active, "rt1234")
+
+
+def test_get_share_state_rt1234_inconsisten(rt1234: FakeShare):
+    bad_yaml = get_new_state_yaml("rt2345", "2020-01-01", "initial")
+    print(bad_yaml)
+    rt1234.write_event_file("0000", bad_yaml)
+    with raises(state.InconsistentEventError):
+        print(state.get_share_state(rt1234.scenario.active, "rt1234"))
+
+
+def test_get_share_state_rt1234_bad_state(rt1234: FakeShare):
+    rt1234.write_state_yaml("0000", "2020-01-01", "initiallll")
+    with raises(state.BadStateError):
+        print(state.get_share_state(rt1234.scenario.active, "rt1234"))
+
+
+def test_get_share_state_rt1234_missing_state(rt1234: FakeShare):
+    rt1234.write_event_file("0000", "share_id: rt1234")
+    with raises(state.MissingStateError):
+        print(state.get_share_state(rt1234.scenario.active, "rt1234"))
+
+
+def test_get_share_state_rt1234_ambiguous_state(rt1234: FakeShare):
+    bad_yaml = get_new_state_yaml("rt1234", "2020-01-01", "initial")
+    bad_yaml += "first_email_date: '2020-01-23'\n"
+    print(bad_yaml)
+    rt1234.write_event_file("0000", bad_yaml)
+    with raises(state.AmbiguousStateError):
+        print(state.get_share_state(rt1234.scenario.active, "rt1234"))
