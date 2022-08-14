@@ -1,4 +1,4 @@
-from datetime import date as D 
+from datetime import date as D
 
 from pytest import mark
 
