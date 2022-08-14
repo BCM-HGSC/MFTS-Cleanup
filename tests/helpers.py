@@ -81,12 +81,7 @@ class FakeShare:
         return self.write_state_yaml("0001", first_email_date, "first_email")
 
     def write_state_yaml(self, event_id: str, event_date: str, state_name: str) -> Path:
-        yaml_text = dedent(
-            f"""\
-            {state_name}_date: '{event_date}'
-            share_id: {self.share_id}
-            """
-        )
+        yaml_text = get_new_state_yaml(self.share_id, event_date, state_name)
         yaml_file_path = self.write_event_file(event_id, yaml_text)
         return yaml_file_path
 
@@ -94,3 +89,13 @@ class FakeShare:
         yaml_file_path = self.scenario.active / f"{self.share_id}_{event_id}.yaml"
         yaml_file_path.write_text(yaml_text)
         return yaml_file_path
+
+
+def get_new_state_yaml(share_id: str, event_date: str, state_name: str):
+    yaml_text = dedent(
+        f"""\
+        {state_name}_date: '{event_date}'
+        share_id: {share_id}
+        """
+    )
+    return yaml_text
