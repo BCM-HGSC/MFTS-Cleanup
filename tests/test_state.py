@@ -54,6 +54,30 @@ def test_state_next_property():
     assert state.State.hold.next is None
 
 
+@mark.xfail
+@mark.parametrize(
+    "test_case",
+    [
+        # Note that MLK day on the 20 shifts all subsequent dates.
+        "initial       2020-01-01  first_email  2020-01-23",
+        "first_email   2020-01-23  second_email 2020-01-28",
+        "second_email  2020-01-28  final_email  2020-01-29",
+        "final_email   2020-01-29  cleanup      2020-01-30",
+        "cleanup       2020-01-30  None         None",
+    ],
+)
+def test_get_transition(test_case: str):
+    start_state_str, start_date_str, new_state_str, new_date_str = test_case.split()
+    start_state = state.State[start_state_str]
+    start_date = D.fromisoformat(start_date_str)
+    expect_new_state = None if new_state_str == "None" else state.State[new_state_str]
+    expect_new_date = None if new_date_str == "None" else D.fromisoformat(new_date_str)
+    print(start_state, start_date, expect_new_state, expect_new_date)
+    new_state, new_date = state.get_transition(start_state, start_date)
+    assert new_state == expect_new_state
+    assert new_date == expect_new_date
+
+
 def test_get_next_state_initial():
     assert state.get_next_state(state.State.initial) == state.State.first_email
 
