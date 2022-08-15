@@ -54,37 +54,37 @@ def test_state_next_property():
     assert state.State.hold.next is None
 
 
-def test_get_next_value_initial():
+def test_get_next_state_initial():
     assert state.get_next_state(state.State.initial) == state.State.first_email
 
 
-def test_get_next_value_first_email():
+def test_get_next_state_first_email():
     assert state.get_next_state(state.State.first_email) == state.State.second_email
 
 
-def test_get_next_value_second_email():
+def test_get_next_state_second_email():
     assert state.get_next_state(state.State.second_email) == state.State.final_email
 
 
-def test_get_next_value_final_email():
+def test_get_next_state_final_email():
     assert state.get_next_state(state.State.final_email) == state.State.cleanup
 
 
-def test_get_next_value_cleanup():
+def test_get_next_state_cleanup():
     assert state.get_next_state(state.State.cleanup) is None
 
 
-def test_get_next_value_illegal_str():
+def test_get_next_state_illegal_str():
     with raises(TypeError):
         state.get_next_state("initial")
 
 
-def test_get_next_value_illegal_None():
+def test_get_next_state_illegal_None():
     with raises(TypeError):
         state.get_next_state(None)
 
 
-def test_get_next_value_illegal_false():
+def test_get_next_state_illegal_false():
     with raises(TypeError):
         state.get_next_state(False)
 
