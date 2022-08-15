@@ -2,7 +2,7 @@ from datetime import date
 from enum import Enum
 from functools import total_ordering
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterator, Optional, Tuple, Union
 
 import yaml
 
@@ -34,6 +34,18 @@ State = Enum(
 
 
 STATE_NAMES = [s.name for s in State]
+
+
+def get_transition(
+    start_state: State, start_state_date: date
+) -> Tuple[Optional[State], Optional[date]]:
+    """
+    Given a state and associated date, compute the next state and the date of change.
+
+    Return (None, None) if the start state is State.cleanup or State.hold
+    """
+    return State.first_email, date(2020, 1, 23)  # sample result
+    raise NotImplementedError  # TODO
 
 
 def get_next_state(state: State) -> Union[State, None]:
