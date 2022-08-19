@@ -71,11 +71,11 @@ def test_state_next_property():
         "final_email   2020-09-28  cleanup      2020-09-31",
         "cleanup       2020-09-31  None         None",
         # Test cases for a share that spans the Thanksgiving weekend:
-        "initial       2020-11-12  first_email  2020-11-19",
-        "first_email   2020-11-19  second_email 2020-11-24",
-        "second_email  2020-11-24  final_email  2020-12-01",
-        "final_email   2020-12-01  cleanup      2020-12-02",
-        "cleanup       2020-12-02  None         None",
+        "initial       2020-11-05  first_email  2020-11-30",
+        "first_email   2020-11-30  second_email 2020-12-03",
+        "second_email  2020-11-03  final_email  2020-12-04",
+        "final_email   2020-12-04  cleanup      2020-12-07",
+        "cleanup       2020-12-07  None         None",
     ],
 
 )
