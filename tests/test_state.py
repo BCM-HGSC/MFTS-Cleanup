@@ -72,6 +72,7 @@ def test_state_next_property():
         "cleanup       2020-09-31  None         None",
         # Test cases for a share that spans the Thanksgiving weekend:
         "initial       2020-11-05  first_email  2020-11-30",
+            # Thanksgiving and Black Friday fall on the 26th and 27th
         "first_email   2020-11-30  second_email 2020-12-03",
         "second_email  2020-11-03  final_email  2020-12-04",
         "final_email   2020-12-04  cleanup      2020-12-07",
