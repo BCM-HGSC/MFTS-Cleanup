@@ -31,6 +31,7 @@ import yaml
 
 from . import __version__
 from .cleanup import new_share, process_active_shares
+from .email import Emailer
 
 
 def main(argv: Optional[Sequence[str]] = None):
@@ -90,11 +91,11 @@ def auto_cleanup_shares(argv: Optional[Sequence[str]] = None):
     args = parse_auto_cleanup_shares_command_line(argv)
     metadata_root = args.metadata_root
     email_config = load_config(metadata_root / "email_settings.yaml")
-    process_active_shares(
-        metadata_root,
+    emailer = Emailer(
         email_config.from_address,
         email_config.host,
     )
+    process_active_shares(metadata_root, date.today(), emailer)
 
 
 def parse_auto_cleanup_shares_command_line(argv: Optional[Sequence[str]] = None):
