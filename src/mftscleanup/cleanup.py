@@ -4,13 +4,19 @@ Operates just below command line parsing.
 """
 
 
-from datetime import date, timedelta
+from datetime import date
+from logging import getLogger
 from pathlib import Path
 from os.path import getsize
 from typing import Union
 
-from addict import Dict
-from yaml import dump, safe_load
+from yaml import dump
+
+from .email import Emailer
+from .state import get_active_shares, get_share_state
+
+
+logger = getLogger(__name__)
 
 
 def new_share(
@@ -49,28 +55,19 @@ def get_directory_totals(top: Path):
     return num_files, total_size
 
 
-def process_active_shares(metadata_root, from_address, email_host):
-    active_dir = Path(metadata_root) / "active"
-    today = date.today()
-    for p in active_dir.rglob("*_initial.yaml"):
-        if p.is_file():
-            with open(p) as f:
-                rt_share_info = Dict(safe_load(f))
-            process_share(rt_share_info, today)
+def process_active_shares(metadata_root: Path, effective_date: date, emailer: Emailer):
+    assert isinstance(metadata_root, Path), metadata_root
+    for share_id in get_active_shares(metadata_root / "active"):
+        logger.info(f"processing {share_id}")
+        try:
+            process_share(metadata_root, share_id, effective_date, emailer)
+            logger.info(f"finished {share_id}")
+        except Exception:
+            logger.exception(f"problem with {share_id}")
 
 
-def process_share(rt_share_info, today):
-    print(rt_share_info)
-    initial_date = date.fromisoformat(rt_share_info.initial_date)
-    print(repr(initial_date), repr(today))
-
-    if (today) - (initial_date) < timedelta(21):
-        print("not enough time")
-    elif (today) - (initial_date) == timedelta(21):
-        print("yaml_file1")
-    elif (today) - (initial_date) == timedelta(25):
-        print("yaml_file2")
-    elif (today) - (initial_date) == timedelta(27):
-        print("yaml_file3")
-    else:
-        print("no action required")
+def process_share(
+    metadata_root: Path, share_id: str, effective_date: date, emailer: Emailer
+):
+    state, state_date = get_share_state(metadata_root / "active", share_id)
+    raise NotImplementedError  # TODO
