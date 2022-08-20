@@ -18,10 +18,13 @@ Since there are more than one console_scripts, calling this module directly
 requires specify which command is intended.
 """
 
-import argparse, os
-
+import argparse
+from datetime import date
+from os.path import isdir
 from pathlib import Path
-from sys import argv, stderr
+from sys import argv as sysargv
+from sys import stderr
+from typing import Optional, Sequence
 
 from addict import Dict
 import yaml
@@ -30,45 +33,49 @@ from . import __version__
 from .cleanup import new_share, process_active_shares
 
 
-def main():
-    if len(argv) < 2:
+def main(argv: Optional[Sequence[str]] = None):
+    """
+    Handles being invoked using `python -m mftscleanup ...`
+    """
+    argv = argv or sysargv[1:]
+    if not argv:
         command = "--help"
     else:
-        command = argv[1]
-        del argv[1]
+        command = argv[0]
+        del argv[0]
     if command == "--help":
         print("required: COMMAND CONFIG_FILE ...", file=stderr)
         print("    COMMAND = new | auto", file=stderr)
     elif command == "new":
-        return register_share()
+        return register_new_share(argv)
     elif command == "auto":
-        return auto_cleanup()
+        return auto_cleanup_shares(argv)
     else:
         print(f"bad command: {command}. See --help.", file=stderr)
 
 
-def register_share():
-    args = parse_register_command_line()
-    config = load_config(args.config_file_path)
+def register_new_share(argv: Optional[Sequence[str]] = None):
+    args = parse_register_new_share_command_line(argv)
     new_share(
-        config.metadata_root,
+        args.metadata_root,
         args.share_id,
         args.share_directory_path,
         args.email_addresses,
+        date.today(),
     )
 
 
-def parse_register_command_line():
+def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
     """
     `register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
     """
     parser = argparse.ArgumentParser(description="Registering a new share")
 
-    parser.add_argument("config_file_path")
+    parser.add_argument("metadata_root")
     parser.add_argument("rt_number")
     parser.add_argument("share_directory_path", type=dir_path)
     parser.add_argument("email_addresses", nargs="+")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     args.share_id = "rt" + args.rt_number
 
@@ -79,8 +86,31 @@ def parse_register_command_line():
     return args
 
 
+def auto_cleanup_shares(argv: Optional[Sequence[str]] = None):
+    args = parse_auto_cleanup_shares_command_line(argv)
+    metadata_root = args.metadata_root
+    email_config = load_config(metadata_root / "email_settings.yaml")
+    process_active_shares(
+        metadata_root,
+        email_config.from_address,
+        email_config.host,
+    )
+
+
+def parse_auto_cleanup_shares_command_line(argv: Optional[Sequence[str]] = None):
+    """
+    `auto-cleanup-shares METADATA_ROOT`
+    """
+    parser = argparse.ArgumentParser(
+        description="Required aguments to run include the following:"
+    )
+    parser.add_argument("metadata_root", type=dir_path)
+    arguments = parser.parse_args(argv)
+    return arguments
+
+
 def dir_path(string):
-    if os.path.isdir(string):
+    if isdir(string):
         return Path(string)
     else:
         raise NotADirectoryError(string)
@@ -90,35 +120,6 @@ def load_config(config_file_path):
     with open(config_file_path) as f:
         config = Dict(yaml.safe_load(f))
     return config
-
-
-"""
-Implements the cleanup of directories
-
-"""
-
-
-def auto_cleanup():
-    args = start_cleanup()
-    config = load_config(args.config_file_path)
-
-    process_active_shares(
-        config.metadata_root,
-        config.email.from_address,
-        config.email.host,
-    )
-
-
-def start_cleanup():
-    """
-    `auto-cleanup-shares CONFIG_FILE_PATH `
-    """
-    parser = argparse.ArgumentParser(
-        description="Required aguments to run include the following:"
-    )
-    parser.add_argument("config_file_path", type=Path)
-    arguments = parser.parse_args()
-    return arguments
 
 
 if __name__ == "__main__":
