@@ -23,7 +23,7 @@ def new_share(
     metadata_root: Union[str, Path],
     share_id: str,
     share_directory: Path,
-    email_addresses,
+    extra_email_addresses: list[str],
     start_date: date,
 ):
     """
@@ -34,7 +34,7 @@ def new_share(
     payload = dict(
         share_id=share_id,
         share_directory=str(share_directory),
-        email_addresses=email_addresses,
+        extra_email_addresses=extra_email_addresses,
         initial_date=str(start_date),
         num_files=no_of_files,
         state="initial",
