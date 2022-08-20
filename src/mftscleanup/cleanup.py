@@ -21,9 +21,10 @@ logger = getLogger(__name__)
 
 def new_share(
     metadata_root: Union[str, Path],
+    sponsor_id: str,
     share_id: str,
     share_directory: Path,
-    email_addresses,
+    extra_email_addresses: list[str],
     start_date: date,
 ):
     """
@@ -32,9 +33,10 @@ def new_share(
     assert share_directory.is_dir(), share_directory
     no_of_files, t_file_size = get_directory_totals(share_directory)
     payload = dict(
+        sponsor_id=sponsor_id,
         share_id=share_id,
         share_directory=str(share_directory),
-        email_addresses=email_addresses,
+        extra_email_addresses=extra_email_addresses,
         initial_date=str(start_date),
         num_files=no_of_files,
         state="initial",

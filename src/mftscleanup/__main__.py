@@ -59,6 +59,7 @@ def register_new_share(argv: Optional[Sequence[str]] = None):
     args = parse_register_new_share_command_line(argv)
     new_share(
         args.metadata_root,
+        args.sponsor_id,
         args.share_id,
         args.share_directory_path,
         args.email_addresses,
@@ -73,6 +74,7 @@ def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
     parser = argparse.ArgumentParser(description="Registering a new share")
 
     parser.add_argument("metadata_root")
+    parser.add_argument("sponsor_id")
     parser.add_argument("rt_number")
     parser.add_argument("share_directory_path", type=dir_path)
     parser.add_argument("email_addresses", nargs="+")

@@ -18,6 +18,7 @@ def test_new_share_happy_path(rt1234: FakeShare):
     # Phase 2: run the code you are testing.
     cleanup.new_share(
         rt1234.scenario.metadata_root,
+        "dummy_sponsor_id",
         "rt1234",
         rt1234.share_root,
         ["fake@fake.com"],
@@ -28,13 +29,14 @@ def test_new_share_happy_path(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        email_addresses:
+        extra_email_addresses:
         - fake@fake.com
         initial_date: '2020-01-01'
         num_bytes: {rt1234.num_bytes}
         num_files: {rt1234.num_files}
         share_directory: {rt1234.share_root}
         share_id: {rt1234.share_id}
+        sponsor_id: dummy_sponsor_id
         state: initial
         """
     )
@@ -49,6 +51,7 @@ def test_new_share_via_main(rt1234: FakeShare):
     argv = [
         "new",
         str(rt1234.scenario.metadata_root),
+        "dummy_sponsor_id",
         "1234",
         str(rt1234.share_root),
         "fake@fake.com",
@@ -58,13 +61,14 @@ def test_new_share_via_main(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        email_addresses:
+        extra_email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}
         num_files: {rt1234.num_files}
         share_directory: {rt1234.share_root}
         share_id: {rt1234.share_id}
+        sponsor_id: dummy_sponsor_id
         state: initial
         """
     )
@@ -85,6 +89,7 @@ def test_new_share_python_command(rt1234: FakeShare):
         "mftscleanup",
         "new",
         str(rt1234.scenario.metadata_root),
+        "dummy_sponsor_id",
         "1234",
         str(rt1234.share_root),
         "fake@fake.com",
@@ -95,13 +100,14 @@ def test_new_share_python_command(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        email_addresses:
+        extra_email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}
         num_files: {rt1234.num_files}
         share_directory: {rt1234.share_root}
         share_id: {rt1234.share_id}
+        sponsor_id: dummy_sponsor_id
         state: initial
         """
     )
@@ -120,6 +126,7 @@ def test_new_share_shell_command(rt1234: FakeShare):
     command = [
         executable_script_path,
         str(rt1234.scenario.metadata_root),
+        "dummy_sponsor_id",
         "1234",
         str(rt1234.share_root),
         "fake@fake.com",
@@ -130,13 +137,14 @@ def test_new_share_shell_command(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        email_addresses:
+        extra_email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}
         num_files: {rt1234.num_files}
         share_directory: {rt1234.share_root}
         share_id: {rt1234.share_id}
+        sponsor_id: dummy_sponsor_id
         state: initial
         """
     )
