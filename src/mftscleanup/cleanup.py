@@ -64,6 +64,9 @@ def process_active_shares(metadata_root: Path, effective_date: date, emailer: Em
         try:
             process_share(metadata_root, share_id, effective_date, emailer)
             logger.info(f"finished {share_id}")
+        except NotImplementedError as e:
+            # raise RuntimeError from e  # Uncomment this line to see the exception.
+            raise  # Expected during development (xfail), not production.
         except Exception:
             logger.exception(f"problem with {share_id}")
 
