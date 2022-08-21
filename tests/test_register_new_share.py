@@ -6,6 +6,7 @@ from textwrap import dedent
 
 from mftscleanup import __main__
 from mftscleanup import cleanup
+from mftscleanup import metadata_store
 from helpers import FakeShare
 
 
@@ -17,7 +18,7 @@ def test_new_share_happy_path(rt1234: FakeShare):
     pass  # Alreadly handled in rt1234.
     # Phase 2: run the code you are testing.
     cleanup.new_share(
-        rt1234.scenario.metadata_root,
+        metadata_store.MetadataStore(rt1234.scenario.metadata_root),
         "dummy_sponsor_id",
         "rt1234",
         rt1234.share_root,
