@@ -10,6 +10,7 @@ from addict import Dict
 from yaml import parser, safe_dump, safe_load
 
 from .email import Emailer
+from .share import Share
 from .state import State, STATE_NAMES
 
 
@@ -71,7 +72,24 @@ class MetadataStore:
         return sorted(shares)
 
     def get_share_state(self, share_id: str) -> tuple[State, date]:
-        yaml_file_path = max(self.active.glob(f"{share_id}_*.yaml"))
+        share = self.load_share(share_id)
+        return share.state, share.state_date
+
+    def load_share(self, share_id: str) -> Share:
+        yaml_file_paths = sorted(self.active.glob(f"{share_id}_*.yaml"))
+        merged_payloads = dict()
+        for yaml_file_path in yaml_file_paths:
+            payload = self.parse_state_yaml_file(yaml_file_path)
+            if payload["share_id"] != share_id:
+                raise InconsistentEventError(
+                    f"YAML file contents do not match the file name: "
+                    f"{share_id=} {yaml_file_path=}"
+                )
+            merged_payloads.update(payload)
+        result = Share(**merged_payloads)
+        return result
+
+    def parse_state_yaml_file(self, yaml_file_path) -> Dict:
         with open(yaml_file_path, "r") as yaml_file:
             try:
                 payload = safe_load(yaml_file)
@@ -81,11 +99,6 @@ class MetadataStore:
                 ) from e
         if not isinstance(payload, dict):
             raise EventNotDictError(f"YAML file is not a dict: {yaml_file=}")
-        if payload["share_id"] != share_id:
-            raise InconsistentEventError(
-                f"YAML file contents do not match the file name: "
-                f"{share_id=} {yaml_file_path=}"
-            )
         results = []
         for key, value in payload.items():
             attribute = str(key)
@@ -95,7 +108,10 @@ class MetadataStore:
                     raise BadStateError(f"bad {state_name=} in {yaml_file_path=}")
                 state = State[state_name]
                 state_date = date.fromisoformat(value)
-                results.append((state, state_date))
+                result = Dict(payload)
+                result.state = state
+                result.state_date = state_date
+                results.append(result)
         if not results:
             raise MissingStateError(f"no state found in {yaml_file_path}")
         if len(results) > 1:
