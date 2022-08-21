@@ -30,9 +30,17 @@ class Scenario:
     def __repr__(self):
         return f"{self.__class__.__name__}({str(self.root)!r})"
 
-    def mkdirs(self):
+    def create(self):
         for p in (self.data, self.active, self.archive):
             p.mkdir(parents=True, exist_ok=True)
+        yaml_text = dedent(
+            f"""\
+            from_address: sender@fake.domain
+            host: SMTP.FAKE.DOMAIN
+            """
+        )
+        yaml_file_path = self.metadata_root / "email_settings.yaml"
+        yaml_file_path.write_text(yaml_text)
 
     def new_share(self, share_id: str) -> "FakeShare":
         return FakeShare(self, share_id)
