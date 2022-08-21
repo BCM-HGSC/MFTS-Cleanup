@@ -4,7 +4,9 @@ Email handling code. We wrap it up in an Emailer instance for better testability
 
 
 class Emailer:
-    def __init__(self, from_address, email_host) -> None:
+    def __init__(self, from_address: str, email_host: str) -> None:
+        assert isinstance(from_address, str), from_address
+        assert isinstance(email_host, str), email_host
         self.from_address = from_address
         self.email_host = email_host
 
