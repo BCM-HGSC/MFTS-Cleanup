@@ -9,7 +9,7 @@ from helpers import Scenario, FakeShare
 @fixture
 def scenario(tmp_path: Path) -> Scenario:
     result = Scenario(tmp_path)
-    result.mkdirs()
+    result.create()
     return result
 
 
