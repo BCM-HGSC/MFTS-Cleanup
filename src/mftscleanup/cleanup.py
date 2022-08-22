@@ -8,11 +8,8 @@ from datetime import date
 from logging import getLogger
 from pathlib import Path
 from os.path import getsize
-from typing import Union
 
-from yaml import dump
-
-from .email import Emailer
+from .metadata_store import MetadataStore
 from .state import get_active_shares, get_share_state
 
 
@@ -20,7 +17,7 @@ logger = getLogger(__name__)
 
 
 def new_share(
-    metadata_root: Union[str, Path],
+    metadata_store: MetadataStore,
     sponsor_id: str,
     share_id: str,
     share_directory: Path,
@@ -42,10 +39,7 @@ def new_share(
         state="initial",
         num_bytes=t_file_size,
     )
-    destination = Path(metadata_root) / "active" / f"{share_id}_0000.yaml"
-    directory = destination.parent
-    directory.mkdir(parents=True, exist_ok=True)
-    destination.write_text(dump(payload), encoding="UTF-8")
+    metadata_store.write_event(payload, share_id, "0000")
 
 
 def get_directory_totals(top: Path):
@@ -57,12 +51,12 @@ def get_directory_totals(top: Path):
     return num_files, total_size
 
 
-def process_active_shares(metadata_root: Path, effective_date: date, emailer: Emailer):
-    assert isinstance(metadata_root, Path), metadata_root
-    for share_id in get_active_shares(metadata_root / "active"):
+def process_active_shares(metadata_store: MetadataStore, effective_date: date):
+    assert isinstance(metadata_store, MetadataStore), metadata_store
+    for share_id in get_active_shares(metadata_store.active):
         logger.info(f"processing {share_id}")
         try:
-            process_share(metadata_root, share_id, effective_date, emailer)
+            process_share(metadata_store, share_id, effective_date)
             logger.info(f"finished {share_id}")
         except NotImplementedError as e:
             # raise RuntimeError from e  # Uncomment this line to see the exception.
@@ -71,8 +65,6 @@ def process_active_shares(metadata_root: Path, effective_date: date, emailer: Em
             logger.exception(f"problem with {share_id}")
 
 
-def process_share(
-    metadata_root: Path, share_id: str, effective_date: date, emailer: Emailer
-):
-    state, state_date = get_share_state(metadata_root / "active", share_id)
+def process_share(metadata_store: MetadataStore, share_id: str, effective_date: date):
+    state, state_date = get_share_state(metadata_store.active, share_id)
     raise NotImplementedError  # TODO

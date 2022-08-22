@@ -26,12 +26,9 @@ from sys import argv as sysargv
 from sys import stderr
 from typing import Optional, Sequence
 
-from addict import Dict
-import yaml
-
 from . import __version__
 from .cleanup import new_share, process_active_shares
-from .email import Emailer
+from .metadata_store import MetadataStore
 
 
 def main(argv: Optional[Sequence[str]] = None):
@@ -57,8 +54,9 @@ def main(argv: Optional[Sequence[str]] = None):
 
 def register_new_share(argv: Optional[Sequence[str]] = None):
     args = parse_register_new_share_command_line(argv)
+    metadata_store = MetadataStore(args.metadata_root)
     new_share(
-        args.metadata_root,
+        metadata_store,
         args.sponsor_id,
         args.share_id,
         args.share_directory_path,
@@ -73,7 +71,7 @@ def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
     """
     parser = argparse.ArgumentParser(description="Registering a new share")
 
-    parser.add_argument("metadata_root")
+    parser.add_argument("metadata_root", type=dir_path)
     parser.add_argument("sponsor_id")
     parser.add_argument("rt_number")
     parser.add_argument("share_directory_path", type=dir_path)
@@ -91,13 +89,8 @@ def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
 
 def auto_cleanup_shares(argv: Optional[Sequence[str]] = None):
     args = parse_auto_cleanup_shares_command_line(argv)
-    metadata_root = args.metadata_root
-    email_config = load_config(metadata_root / "email_settings.yaml")
-    emailer = Emailer(
-        email_config.from_address,
-        email_config.host,
-    )
-    process_active_shares(metadata_root, date.today(), emailer)
+    metadata_store = MetadataStore(args.metadata_root)
+    process_active_shares(metadata_store, date.today())
 
 
 def parse_auto_cleanup_shares_command_line(argv: Optional[Sequence[str]] = None):
@@ -117,12 +110,6 @@ def dir_path(string):
         return Path(string)
     else:
         raise NotADirectoryError(string)
-
-
-def load_config(config_file_path):
-    with open(config_file_path) as f:
-        config = Dict(yaml.safe_load(f))
-    return config
 
 
 if __name__ == "__main__":
