@@ -38,26 +38,29 @@ STATE_NAMES = [s.name for s in State]
 
 
 def get_transition(
-    start_state: State, start_state_date: date
-) -> Tuple[Optional[State], Optional[date]]:
-    """
-    Given a state and associated date, compute the next state and the date of change.
+    start_state: State, start_state_date: date) -> Tuple[Optional[State], Optional[date]]: 
+    if start_state == State.cleanup:
+        return (None,None)
+    if start_state == State.hold:
+        return (None,None)
+    
+    
+    new_state = start_state.next()
+    
+    
+    
+    if start_state == State.initial:
+        number_of_business_days = 15
+    elif start_state == State.first_email:
+        number_of_business_days = 3
+    elif start_state == State.second_email:
+        number_of_business_days = 1
+    elif start_state == State.final_email:
+        number_of_business_days = 1
+    
+    new_date = add_business_days(start_state_date, number_of_business_days)
 
-    Return (None, None) if the start state is State.cleanup or State.hold
-    """
-    #  implement get_next_state and add_business_days to get_transition to pass
-    s = State 
-    start_state_date = date.fromisoformat(s)
-    for s in start_state:
-        new_state = s.next()
-        new_date = start_state_date.add_business_days
-        for date in new_date:
-            if start_state in new_state == State.cleanup:
-                return (None,None)
-            if start_state in new_state  == State.hold:
-                return (None,None)
-
-    return new_state, new_date
+    return new_state
 
     return State.first_email, date(2020, 1, 23)  # sample result
     raise NotImplementedError  # TODO
