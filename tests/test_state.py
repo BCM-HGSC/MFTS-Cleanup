@@ -72,13 +72,12 @@ def test_state_next_property():
         "cleanup       2020-09-31  None         None",
         # Test cases for a share that spans the Thanksgiving weekend:
         "initial       2020-11-05  first_email  2020-11-30",
-            # Thanksgiving and Black Friday fall on the 26th and 27th
+        #    Thanksgiving and Black Friday fall on the 26th and 27th
         "first_email   2020-11-30  second_email 2020-12-03",
         "second_email  2020-11-03  final_email  2020-12-04",
         "final_email   2020-12-04  cleanup      2020-12-07",
         "cleanup       2020-12-07  None         None",
     ],
-
 )
 def test_get_transition(test_case: str):
     start_state_str, start_date_str, new_state_str, new_date_str = test_case.split()
@@ -248,5 +247,3 @@ def test_get_share_state_rt1234_ambiguous_state(rt1234: FakeShare):
     rt1234.write_event_file("0000", bad_yaml)
     with raises(state.AmbiguousStateError):
         print(state.get_share_state(rt1234.scenario.active, "rt1234"))
-
-

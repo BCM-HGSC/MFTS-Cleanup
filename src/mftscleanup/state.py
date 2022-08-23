@@ -6,6 +6,7 @@ from typing import Iterator, Optional, Tuple, Union
 
 import yaml
 
+from mftscleanup import business_days
 
 @total_ordering
 class OrderingAndIncrementMixin:
@@ -44,6 +45,20 @@ def get_transition(
 
     Return (None, None) if the start state is State.cleanup or State.hold
     """
+    #  implement get_next_state and add_business_days to get_transition to pass
+    s = State 
+    start_state_date = date.fromisoformat(s)
+    for s in start_state:
+        new_state = s.next()
+        new_date = start_state_date.add_business_days
+        for date in new_date:
+            if start_state in new_state == State.cleanup:
+                return (None,None)
+            if start_state in new_state  == State.hold:
+                return (None,None)
+
+    return new_state, new_date
+
     return State.first_email, date(2020, 1, 23)  # sample result
     raise NotImplementedError  # TODO
 
