@@ -27,3 +27,14 @@ def add_business_days(start: date, num_businessdays: int) -> date:
                     continue
         remaining_business_days -= 1
     return current_date
+
+
+class departmental_Holidays(holidays.US):
+    def _populate(self, year):
+        holidays.US._populate(self,year)
+        # Columbus day is not observed
+        self.pop_named("Columbus Day")
+        # removing Veterans day because we don't observe 
+        self.pop_named("Veteran's Day")
+        # observe Good Friday as per hgsc google cal
+        # also observe black friday
