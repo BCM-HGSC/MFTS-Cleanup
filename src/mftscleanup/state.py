@@ -56,9 +56,10 @@ def get_transition(
         number_of_business_days = 1
 
     new_date = add_business_days(start_state_date, number_of_business_days)
-    new_state = start_state._next
+    new_state = start_state.next
 
     return new_state, new_date
+
 
 def get_next_state(state: State) -> Union[State, None]:
     """
