@@ -105,6 +105,18 @@ Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
         "final_email   2020-08-28  cleanup      2020-08-31",
         "cleanup       2020-08-31  None         None",
         # Test cases for a share that spans the Thanksgiving weekend:
+        # November 2020
+        # Su Mo Tu We Th Fr Sa
+        #  1  2  3  4  5  6  7
+        #  8  9 10 11 12 13 14
+        # 15 16 17 18 19 20 21
+        # 22 23 24 25 TG BF 28  <- Thanksgiving, Black Friday
+        # 29 30
+        #
+        # December 2020
+        # Su Mo Tu We Th Fr Sa
+        #        1  2  3  4  5
+        #  6  7  8  9 10 11 12
         "initial       2020-11-05  first_email  2020-11-30",
         #    Thanksgiving and Black Friday fall on the 26th and 27th
         "first_email   2020-11-30  second_email 2020-12-03",
