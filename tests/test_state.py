@@ -54,7 +54,7 @@ def test_state_next_property():
     assert state.State.hold.next is None
 
 
-@mark.xfail
+# @mark.xfail
 @mark.parametrize(
     "test_case",
     [
