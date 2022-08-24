@@ -54,7 +54,7 @@ def get_transition(
         number_of_business_days = 1
     elif start_state == State.final_email:
         number_of_business_days = 1
-        
+
     new_date = add_business_days(start_state_date, number_of_business_days)
     next_state = start_state._next
 
@@ -71,7 +71,6 @@ def get_next_state(state: State) -> Union[State, None]:
     It is an error to call this with anything other than a State.
     Calling with State.cleanup or State.hold should return None.
     """
-    print(type(state))
     if not isinstance(state, State):
         raise TypeError(f"bad state: {state!r}")
     value = state.value
