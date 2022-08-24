@@ -6,7 +6,8 @@ from typing import Iterator, Optional, Tuple, Union
 
 import yaml
 
-from mftscleanup import business_days
+from mftscleanup.business_days import add_business_days
+
 
 @total_ordering
 class OrderingAndIncrementMixin:
@@ -38,18 +39,14 @@ STATE_NAMES = [s.name for s in State]
 
 
 def get_transition(
-    start_state: State, start_state_date: date) -> Tuple[Optional[State], Optional[date]]: 
+    start_state: State, start_state_date: date
+) -> Tuple[Optional[State], Optional[date]]:
+
     if start_state == State.cleanup:
-        return (None,None)
-    if start_state == State.hold:
-        return (None,None)
-    
-    
-    new_state = start_state.next()
-    
-    
-    
-    if start_state == State.initial:
+        return (None, None)
+    elif start_state == State.hold:
+        return (None, None)
+    elif start_state == State.initial:
         number_of_business_days = 15
     elif start_state == State.first_email:
         number_of_business_days = 3
@@ -57,10 +54,11 @@ def get_transition(
         number_of_business_days = 1
     elif start_state == State.final_email:
         number_of_business_days = 1
-    
+        
     new_date = add_business_days(start_state_date, number_of_business_days)
+    next_state = start_state._next
 
-    return new_state
+    return new_state, new_date
 
     return State.first_email, date(2020, 1, 23)  # sample result
     raise NotImplementedError  # TODO
@@ -73,6 +71,7 @@ def get_next_state(state: State) -> Union[State, None]:
     It is an error to call this with anything other than a State.
     Calling with State.cleanup or State.hold should return None.
     """
+    print(type(state))
     if not isinstance(state, State):
         raise TypeError(f"bad state: {state!r}")
     value = state.value
