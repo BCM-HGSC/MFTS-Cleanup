@@ -4,6 +4,9 @@ future. A data is a business day if it is neither a weekend nor a US observed ho
 """
 
 from datetime import date, timedelta
+from dateutil.easter import easter as E
+from dateutil.relativedelta import relativedelta as RD
+from dateutil.relativedelta import TH, FR
 
 import holidays
 
@@ -37,4 +40,6 @@ class departmental_Holidays(holidays.US):
         # removing Veterans day because we don't observe 
         self.pop_named("Veteran's Day")
         # observe Good Friday as per hgsc google cal
+        self[E(year) + RD(weekday = FR(-1))] = "Good Friday" 
         # also observe black friday
+        self[date(year, 11, 1) + RD(weekday=TH(+4)) + ONE_DAY] = "Black Friday"
