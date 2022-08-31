@@ -54,7 +54,6 @@ def test_state_next_property():
     assert state.State.hold.next is None
 
 
-# @mark.xfail
 '''
       January               February               March          
 Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
