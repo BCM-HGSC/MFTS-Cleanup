@@ -75,3 +75,6 @@ def test_black_friday():
     assert add_business_days(D(2025, 11, 24), 3) == D(2025, 12, 1)
     assert add_business_days(D(2027, 11, 22), 3) == D(2027, 11, 29)
     assert add_business_days(D(2029, 11, 19), 3) == D(2029, 11, 26)
+
+def test_good_friday():
+    assert add_business_days(D(2020, 4, 7), 4) == D(2020, 4, 14)
