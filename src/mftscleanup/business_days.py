@@ -43,3 +43,6 @@ class departmental_Holidays(holidays.US):
         self[E(year) + RD(weekday = FR(-1))] = "Good Friday" 
         # also observe black friday
         self[date(year, 11, 1) + RD(weekday=TH(+4)) + ONE_DAY] = "Black Friday"
+
+
+dep_holidays = departmental_Holidays()
