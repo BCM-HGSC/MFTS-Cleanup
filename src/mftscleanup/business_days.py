@@ -47,7 +47,6 @@ class departmental_Holidays(holidays.US):
         self[E(year) + RD(weekday = FR(-1))] = "Good Friday" 
         # also observe black friday
         self[date(year, 11, 1) + RD(weekday=TH(+4)) + ONE_DAY] = "Black Friday"
-        
         # Juneteenth Day
         if year > 2022:
             name = "Juneteenth National Independence Day"
@@ -56,9 +55,6 @@ class departmental_Holidays(holidays.US):
                 self[date(year, JUN, 18)] = name + " (Observed)"
             elif self.observed and date(year, JUN, 19).weekday() == SUN:
                 self[date(year, JUN, 20)] = name + " (Observed)"
-        self.pop_named("Juneteenth National Independence Day")
-        
-        
         # Christmas Eve
         if year < 2022:
             name = "Christmas Eve"
