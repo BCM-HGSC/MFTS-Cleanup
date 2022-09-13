@@ -102,4 +102,6 @@ Su Mo Tu We Th Fr Sa
 
 def test_Juneteenth():
     start = D(2020,5,22)
-    assert add_business_days(D(2020,6,17),3) == D(2020,6,22)
+    assert add_business_days(D(2020,6,12),3) == D(2020,6,17) # second email test 
+    assert add_business_days(D(2020,6,17),3) == D(2020,6,22) # Final email test
+    assert add_business_days(D(2020,6,22),1) == D(2020,6,23) # cleanup
