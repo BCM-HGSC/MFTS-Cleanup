@@ -6,7 +6,7 @@ future. A data is a business day if it is neither a weekend nor a US observed ho
 from datetime import date, timedelta
 from dateutil.easter import easter as E
 from dateutil.relativedelta import relativedelta as RD
-from dateutil.relativedelta import TH, FR, SA,SU
+from dateutil.relativedelta import TH, FR
 
 import holidays
 from holidays.constants import (
