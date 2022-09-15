@@ -88,8 +88,8 @@ Su Mo Tu We Th Fr Sa
 17 18 19 20 21 22 23  
 24 25 26 27 28 29 30  
 31                    
-❯ cal June 2020
-     June 2020        
+
+        June 2020        
 Su Mo Tu We Th Fr Sa  
     1  2  3  4  5  6  
  7  8  9 10 11 12 13  
@@ -100,8 +100,37 @@ Su Mo Tu We Th Fr Sa
 
 """
 
-def test_Juneteenth():
+def test_Juneteenth_2020():
     start = D(2020,5,22)
     assert add_business_days(D(2020,6,12),3) == D(2020,6,17) # second email test 
     assert add_business_days(D(2020,6,17),3) == D(2020,6,22) # Final email test
     assert add_business_days(D(2020,6,22),1) == D(2020,6,23) # cleanup
+
+#   2021 & 2022 Juneteenth fall on Sat and Sun. Next test will be for 2023
+"""
+
+      May 2023        
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+ 7  8  9 10 11 12 13  
+14 15 16 17 18 19 20  
+21 22 23 24 25 26 27  
+28 29 30 31   
+
+     June 2023        
+Su Mo Tu We Th Fr Sa  
+             1  2  3  
+ 4  5  6  7  8  9 10  
+11 12 13 14 15 16 17  
+18 JT 20 21 22 23 24  
+25 26 27 28 29 30     
+                    
+"""
+
+def test_Juneteenth_2023():
+    start = D(2023,5,22)
+    assert add_business_days(D(2023,6,12),5) == D(2023,6,20) # first email
+    assert add_business_days(D(2023,6,20),3) == D(2023,6,23) # second email
+
+
+
