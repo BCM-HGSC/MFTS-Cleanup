@@ -1,3 +1,4 @@
+from audioop import add
 from datetime import date as D
 
 from pytest import mark
@@ -101,7 +102,7 @@ Su Mo Tu We Th Fr Sa
 """
 
 def test_Juneteenth_2020():
-    start = D(2020,5,22)
+    # ticket starts on 5/22/2020
     assert add_business_days(D(2020,6,12),3) == D(2020,6,17) # second email test 
     assert add_business_days(D(2020,6,17),3) == D(2020,6,22) # Final email test
     assert add_business_days(D(2020,6,22),1) == D(2020,6,23) # cleanup
@@ -128,9 +129,6 @@ Su Mo Tu We Th Fr Sa
 """
 
 def test_Juneteenth_2023():
-    start = D(2023,5,22)
+# ticket starts on 5/22/2023
     assert add_business_days(D(2023,6,12),5) == D(2023,6,20) # first email
     assert add_business_days(D(2023,6,20),3) == D(2023,6,23) # second email
-
-
-
