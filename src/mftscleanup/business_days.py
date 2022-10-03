@@ -19,9 +19,8 @@ from holidays.constants import (
 
 
 
-ONE_DAY = timedelta(days=1)
-us_holidays = holidays.USA()
 
+ONE_DAY = timedelta(days=1)
 
 def add_business_days(start: date, num_businessdays: int) -> date:
     current_date = start
@@ -36,7 +35,7 @@ def add_business_days(start: date, num_businessdays: int) -> date:
     return current_date
 
 
-class departmental_Holidays(holidays.US):
+class departmentalHolidays(holidays.US):
     def _populate(self, year):
         holidays.US._populate(self,year)
         # Columbus day is not observed
@@ -67,4 +66,4 @@ class departmental_Holidays(holidays.US):
             elif self.observed and date(year, DEC, 24).weekday() in WEEKEND:
                 self[date(year, DEC, 24) + RD(weekday=FR(-1))] = name
 
-dep_holidays = departmental_Holidays()
+dep_holidays = departmentalHolidays()
