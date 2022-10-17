@@ -5,7 +5,7 @@ A single share will involve one or more YAML files inside a metadata directory
 along with a share-specific directory containing the shared data. A minimal
 example:
 
-    test_new_share_happy_path0
+    test_new_share_happy_path
     +-- data
     |   +-- rt1234
     |       +-- dummy_1234.txt
