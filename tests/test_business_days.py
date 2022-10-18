@@ -136,7 +136,6 @@ Su Mo Tu We Th Fr Sa
 """
 
 def test_Juneteenth_2023():
-
-# ticket starts on 5/22/2023
+    # ticket starts on 5/22/2023
     assert add_business_days(D(2023,6,12),5) == D(2023,6,20) # first email
     assert add_business_days(D(2023,6,20),3) == D(2023,6,23) # second email
