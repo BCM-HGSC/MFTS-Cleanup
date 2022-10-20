@@ -35,7 +35,7 @@ def add_business_days(start: date, num_businessdays: int) -> date:
     return current_date
 
 
-class departmentalHolidays(holidays.US):
+class DepartmentalHolidays(holidays.US):
     def _populate(self, year):
         holidays.US._populate(self,year)
         # Columbus day is not observed
@@ -66,4 +66,4 @@ class departmentalHolidays(holidays.US):
             elif self.observed and date(year, DEC, 24).weekday() in WEEKEND:
                 self[date(year, DEC, 24) + RD(weekday=FR(-1))] = name
 
-dep_holidays = departmentalHolidays()
+dep_holidays = DepartmentalHolidays()
