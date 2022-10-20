@@ -22,6 +22,7 @@ from holidays.constants import (
 
 ONE_DAY = timedelta(days=1)
 
+
 def add_business_days(start: date, num_businessdays: int) -> date:
     current_date = start
     remaining_business_days = num_businessdays
