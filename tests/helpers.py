@@ -18,8 +18,6 @@ example:
 from pathlib import Path
 from textwrap import dedent
 
-from .metadata_store import MetadataStore
-
 
 class Scenario:
     def __init__(self, root: Path):
