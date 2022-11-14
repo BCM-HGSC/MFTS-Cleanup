@@ -74,6 +74,7 @@ def test_black_friday():
     assert add_business_days(D(2027, 11, 22), 3) == D(2027, 11, 29)
     assert add_business_days(D(2029, 11, 19), 3) == D(2029, 11, 26)
 
+
 def test_good_friday():
     assert add_business_days(D(2020, 4, 7), 4) == D(2020, 4, 14)
 
@@ -102,14 +103,13 @@ Su Mo Tu We Th Fr Sa
 
 def test_Juneteenth_2020():
     # ticket starts on 5/22/2020
-    assert add_business_days(D(2020,5,22),15) == D(2020,6,15) # first email test
-    assert add_business_days(D(2020,6,15),3) == D(2020,6,18) # second email test 
-    assert add_business_days(D(2020,6,18),3) == D(2020,6,23) # Final email test
-    assert add_business_days(D(2020,6,23),1) == D(2020,6,24) # cleanup
+    assert add_business_days(D(2020, 5, 22), 15) == D(2020, 6, 15)  # first email test
+    assert add_business_days(D(2020, 6, 15), 3) == D(2020, 6, 18)  # second email test
+    assert add_business_days(D(2020, 6, 18), 3) == D(2020, 6, 23)  # Final email test
+    assert add_business_days(D(2020, 6, 23), 1) == D(2020, 6, 24)  # cleanup
 
 
-
-#   2021 & 2022 Juneteenth fall on Sat and Sun. Next test will be for 2023. Memorial day falls on May 29th 
+#   2021 & 2022 Juneteenth fall on Sat and Sun. Next test will be for 2023. Memorial day falls on May 29th
 
 """
 
@@ -131,7 +131,8 @@ Su Mo Tu We Th Fr Sa
                     
 """
 
+
 def test_Juneteenth_2023():
     # ticket starts on 5/22/2023
-    assert add_business_days(D(2023,6,12),5) == D(2023,6,20) # first email
-    assert add_business_days(D(2023,6,20),3) == D(2023,6,23) # second email
+    assert add_business_days(D(2023, 6, 12), 5) == D(2023, 6, 20)  # first email
+    assert add_business_days(D(2023, 6, 20), 3) == D(2023, 6, 23)  # second email

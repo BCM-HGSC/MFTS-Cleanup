@@ -54,7 +54,7 @@ def test_state_next_property():
     assert state.State.hold.next is None
 
 
-'''
+"""
       January               February               March          
 Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
           1  2  3  4                     1   1  2  3  4  5  6  7  
@@ -89,7 +89,8 @@ Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
 11 12 13 14 15 16 17  15 16 17 18 19 20 21  13 14 15 16 17 18 19  
 18 19 20 21 22 23 24  22 23 24 25 26 27 28  20 21 22 23 24 25 26  
 25 26 27 28 29 30 31  29 30                 27 28 29 30 31   
-'''
+"""
+
 
 @mark.parametrize(
     "test_case",
