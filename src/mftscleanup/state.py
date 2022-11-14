@@ -2,9 +2,11 @@ from datetime import date
 from enum import Enum
 from functools import total_ordering
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterator, Optional, Tuple, Union
 
 import yaml
+
+from mftscleanup.business_days import add_business_days
 
 
 @total_ordering
@@ -34,6 +36,29 @@ State = Enum(
 
 
 STATE_NAMES = [s.name for s in State]
+
+
+def get_transition(
+    start_state: State, start_state_date: date
+) -> Tuple[Optional[State], Optional[date]]:
+
+    if start_state == State.initial:
+        number_of_business_days = 15
+    elif start_state == State.first_email:
+        number_of_business_days = 3
+    elif start_state == State.second_email:
+        number_of_business_days = 1
+    elif start_state == State.final_email:
+        number_of_business_days = 1
+    elif start_state == State.cleanup:
+        return (None, None)
+    elif start_state == State.hold:
+        return (None, None)
+
+    new_date = add_business_days(start_state_date, number_of_business_days)
+    new_state = start_state.next
+
+    return new_state, new_date
 
 
 def get_next_state(state: State) -> Union[State, None]:

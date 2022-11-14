@@ -1,6 +1,4 @@
 from pathlib import Path
-from turtle import rt
-
 from pytest import fixture
 
 from helpers import Scenario, FakeShare
