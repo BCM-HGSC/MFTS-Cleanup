@@ -24,7 +24,7 @@ class OrderingAndIncrementMixin:
         return NotImplemented
 
     @property
-    def next(self) -> Union["State", None]:
+    def next(self) -> Optional["State"]:
         return get_next_state(self)
 
 
@@ -61,7 +61,7 @@ def get_transition(
     return new_state, new_date
 
 
-def get_next_state(state: State) -> Union[State, None]:
+def get_next_state(state: State) -> Optional[State]:
     """
     initial -> first_email -> second_email -> final_email -> cleanup -> None
 
