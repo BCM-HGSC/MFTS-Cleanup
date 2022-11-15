@@ -32,3 +32,4 @@ def test_auto_cleanup_shares_smoke(rt1234_initial: FakeShare):
     ]
     __main__.main(argv)
     # TODO: Test side effects.
+    raise NotImplementedError  # TODO
