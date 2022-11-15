@@ -48,7 +48,7 @@ class MetadataStore:
         )
         return emailer
 
-    def get_sponsor_email(self, sponsor_id) -> str:
+    def get_sponsor_email_address(self, sponsor_id: str) -> str:
         raise NotImplementedError  # TODO
 
     def write_event(self, payload: dict, share_id: str, event_id: str) -> None:
