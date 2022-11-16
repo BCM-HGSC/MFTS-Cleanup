@@ -21,7 +21,7 @@ def new_share(
     sponsor_id: str,
     share_id: str,
     share_directory: Path,
-    extra_email_addresses: list[str],
+    email_addresses: list[str],
     start_date: date,
 ):
     """
@@ -33,7 +33,7 @@ def new_share(
         sponsor_id=sponsor_id,
         share_id=share_id,
         share_directory=str(share_directory),
-        extra_email_addresses=extra_email_addresses,
+        email_addresses=email_addresses,
         initial_date=str(start_date),
         num_files=no_of_files,
         state="initial",
