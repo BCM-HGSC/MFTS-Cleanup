@@ -24,12 +24,30 @@ Invocation would look something like:
 A YAML file will contain the following:
 
 ```yaml
-metadata_root: PATH/TO/METADATA/ROOT
+metadata_root: PATH/TO/METADATA/ROOT # directory path
+current_state:
+    state: STATE
 email:
     from_address: SENDER@bcm.edu
     host: SMTP.SERVER.DOMAIN
+email_nickname:
+    nickname: alias
+    sponsor_email: SPONSOR@bcm.edu
+    sponsor_id: 77777
+extra_emails:
+    email: extra@bcm.edu
+    email: extra@bcm.edu
+    email: hgsc-submit@hgsc.bcm.tmc.edu
+num_bytes:
+    share_size:
+num_files:
+    number_of_files: 0000000
 logging:
     level: INFO
+share_id:
+    id_num:
+start_date:
+    date: MM/DD/YYYY
     ...
 ```
 
