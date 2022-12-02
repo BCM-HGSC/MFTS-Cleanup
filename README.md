@@ -16,38 +16,23 @@ This tool that has been created will serve to archive directories along with the
 
 Invocation would look something like:
 
-`register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
+`register-new-share PATH/TO/METADATA/ROOT SPONSOR_ID RT_NUMBER SHARE_DIRECTORY_PATH [EMAIL...]`
 
 
 ## Config file
 
 A YAML file will contain the following:
+Location: PATH/TO/METADATA/ROOT/config.yaml
 
 ```yaml
-metadata_root: PATH/TO/METADATA/ROOT # directory path
-current_state:
-    state: STATE
 email:
-    from_address: SENDER@bcm.edu
-    host: SMTP.SERVER.DOMAIN
-email_nickname:
-    nickname: alias
-    sponsor_email: SPONSOR@bcm.edu
-    sponsor_id: 77777
-extra_emails:
-    email: extra@bcm.edu
-    email: extra@bcm.edu
-    email: hgsc-submit@hgsc.bcm.tmc.edu
-num_bytes:
-    share_size:
-num_files:
-    number_of_files: 0000000
+  from_address: SENDER@bcm.edu
+  host: SMTP.SERVER.DOMAIN
+sponsors:  # Maps sponsor_id to sponsor_email for known sponsors
+  - sponsor1: first_name.last_name1@bcm.edu
+  - sponsor2: first_name.last_name2@bcm.edu
 logging:
     level: INFO
-share_id:
-    id_num:
-start_date:
-    date: MM/DD/YYYY
     ...
 ```
 
