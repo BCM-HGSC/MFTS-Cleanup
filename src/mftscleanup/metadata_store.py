@@ -27,6 +27,7 @@ class MetadataStore:
         self.metadata_root = Path(metadata_root)
         self._active = self.metadata_root / "active"
         self._archive = self.metadata_root / "archive"
+        self._emailer = None
 
     @property
     def active(self) -> Path:
@@ -40,13 +41,18 @@ class MetadataStore:
             self._archive.mkdir(parents=True, exist_ok=True)
         return self._archive
 
-    def load_emailer(self, emailer_factory=Emailer) -> Emailer:
-        email_config = load_config(self.metadata_root / "email_settings.yaml")
-        emailer = emailer_factory(
+    @property
+    def emailer(self) -> Emailer:
+        if not self._emailer:
+            self.load_emailer()
+        return self._emailer
+
+    def load_emailer(self, emailer_class=Emailer) -> None:
+        email_config = self.load_config("email_settings.yaml")
+        self._emailer = emailer_class(
             email_config.from_address,
             email_config.host,
         )
-        return emailer
 
     def get_sponsor_email_address(self, sponsor_id: str) -> str:
         raise NotImplementedError  # TODO
@@ -96,6 +102,11 @@ class MetadataStore:
         if len(results) > 1:
             raise AmbiguousStateError(f"ambiguous state in {yaml_file_path=}")
         return results[0]
+
+    def load_config(self, config_file_name: str) -> Dict:
+        with open(self.metadata_root / config_file_name) as f:
+            config = Dict(safe_load(f))
+        return config
 
 
 def write_yaml(payload: dict, destination: Path) -> None:
