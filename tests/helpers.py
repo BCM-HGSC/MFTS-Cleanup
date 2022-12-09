@@ -52,6 +52,7 @@ class Scenario:
 class FakeShare:
     def __init__(self, scenario: Scenario, share_id: str):
         self.scenario = scenario
+        self.sponsor_id = "fake_sponsor"
         self.metadata_store = scenario.metadata_store
         self.share_id = share_id
         self.share_root = self.scenario.data / f"{self.share_id}"
@@ -83,6 +84,7 @@ class FakeShare:
             num_files: {self.num_files}
             share_id: {self.share_id}
             share_directory: {self.share_root}
+            sponsor_id: {self.sponsor_id}
             state: initial
             """
         )

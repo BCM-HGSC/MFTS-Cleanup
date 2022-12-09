@@ -48,6 +48,7 @@ def test_metadata_fixtures(rt1234_first_email: FakeShare, rt5678: FakeShare):
         "num_bytes": 6,
         "num_files": 1,
         "share_id": "rt1234",
+        "sponsor_id": "fake_sponsor",
         "state": "initial",
     }
     data_paths = sorted(p for p in scenario.data.rglob("*") if p.is_file())
