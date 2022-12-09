@@ -65,10 +65,10 @@ class MetadataStore:
         """
         Return the names (eg. "rt1234") of all the active shares.
         """
-        shares = set()
-        for yaml_file_path in self.active.glob("*.yaml"):
-            share_name = yaml_file_path.name.rsplit("_", 1)[0]
-            shares.add(share_name)
+        shares = {  # Use set to filter duplicate names.
+            yaml_file_path.name.rsplit("_", 1)[0]
+            for yaml_file_path in self.active.glob("*.yaml")
+        }
         return sorted(shares)
 
     def get_share_state(self, share_id: str) -> tuple[State, date]:
