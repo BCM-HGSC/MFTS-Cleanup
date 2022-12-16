@@ -18,14 +18,17 @@ example:
 from pathlib import Path
 from textwrap import dedent
 
+from mftscleanup.metadata_store import MetadataStore
+
 
 class Scenario:
     def __init__(self, root: Path):
         self.root = Path(root)
         self.data = self.root / "data"
-        self.metadata_root = self.root / "metadata_root"
-        self.active = self.metadata_root / "active"
-        self.archive = self.metadata_root / "archive"
+        self.metadata_store = MetadataStore(self.root / "metadata_root")
+        self.metadata_root = self.metadata_store.metadata_root
+        self.active = self.metadata_store.active
+        self.archive = self.metadata_store.archive
 
     def __repr__(self):
         return f"{self.__class__.__name__}({str(self.root)!r})"
@@ -49,6 +52,8 @@ class Scenario:
 class FakeShare:
     def __init__(self, scenario: Scenario, share_id: str):
         self.scenario = scenario
+        self.sponsor_id = "fake_sponsor"
+        self.metadata_store = scenario.metadata_store
         self.share_id = share_id
         self.share_root = self.scenario.data / f"{self.share_id}"
         self.share_root.mkdir()
@@ -79,6 +84,7 @@ class FakeShare:
             num_files: {self.num_files}
             share_id: {self.share_id}
             share_directory: {self.share_root}
+            sponsor_id: {self.sponsor_id}
             state: initial
             """
         )

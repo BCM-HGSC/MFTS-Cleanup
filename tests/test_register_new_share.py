@@ -30,7 +30,7 @@ def test_new_share_happy_path(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        extra_email_addresses:
+        email_addresses:
         - fake@fake.com
         initial_date: '2020-01-01'
         num_bytes: {rt1234.num_bytes}
@@ -62,7 +62,7 @@ def test_new_share_via_main(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        extra_email_addresses:
+        email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}
@@ -101,7 +101,7 @@ def test_new_share_python_command(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        extra_email_addresses:
+        email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}
@@ -138,7 +138,7 @@ def test_new_share_shell_command(rt1234: FakeShare):
     assert yaml_path.is_file()
     EXPECTED_YAML = dedent(
         f"""\
-        extra_email_addresses:
+        email_addresses:
         - fake@fake.com
         initial_date: '{today_str}'
         num_bytes: {rt1234.num_bytes}

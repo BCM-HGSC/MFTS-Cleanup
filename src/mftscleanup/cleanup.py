@@ -10,7 +10,6 @@ from pathlib import Path
 from os.path import getsize
 
 from .metadata_store import MetadataStore
-from .state import get_active_shares, get_share_state
 
 
 logger = getLogger(__name__)
@@ -21,7 +20,7 @@ def new_share(
     sponsor_id: str,
     share_id: str,
     share_directory: Path,
-    extra_email_addresses: list[str],
+    email_addresses: list[str],
     start_date: date,
 ):
     """
@@ -33,7 +32,7 @@ def new_share(
         sponsor_id=sponsor_id,
         share_id=share_id,
         share_directory=str(share_directory),
-        extra_email_addresses=extra_email_addresses,
+        email_addresses=email_addresses,
         initial_date=str(start_date),
         num_files=no_of_files,
         state="initial",
@@ -53,7 +52,7 @@ def get_directory_totals(top: Path):
 
 def process_active_shares(metadata_store: MetadataStore, effective_date: date):
     assert isinstance(metadata_store, MetadataStore), metadata_store
-    for share_id in get_active_shares(metadata_store.active):
+    for share_id in metadata_store.get_active_shares():
         logger.info(f"processing {share_id}")
         try:
             process_share(metadata_store, share_id, effective_date)
@@ -66,5 +65,5 @@ def process_active_shares(metadata_store: MetadataStore, effective_date: date):
 
 
 def process_share(metadata_store: MetadataStore, share_id: str, effective_date: date):
-    state, state_date = get_share_state(metadata_store.active, share_id)
+    state, state_date = metadata_store.get_share_state(share_id)
     raise NotImplementedError  # TODO
