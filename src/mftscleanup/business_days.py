@@ -8,7 +8,7 @@ from dateutil.easter import easter as E
 from dateutil.relativedelta import relativedelta as RD
 from dateutil.relativedelta import TH, FR
 
-import holidays
+from holidays.countries import USA
 from holidays.constants import SAT, SUN, WEEKEND, JUN, DEC
 
 
@@ -28,9 +28,9 @@ def add_business_days(start: date, num_businessdays: int) -> date:
     return current_date
 
 
-class DepartmentalHolidays(holidays.US):
+class DepartmentalHolidays(USA):
     def _populate(self, year):
-        holidays.US._populate(self, year)
+        USA._populate(self, year)
         # Columbus day is not observed
         self.pop_named("Columbus Day")
         # removing Veterans day because we don't observe
