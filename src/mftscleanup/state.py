@@ -33,6 +33,8 @@ STATE_NAMES = [s.name for s in State]
 def get_transition(
     current_state: State, current_state_start_date: date
 ) -> Tuple[Optional[State], Optional[date]]:
+    if current_state in (State.cleanup, State.hold):
+        return (None, None)
 
     if current_state == State.initial:
         number_of_business_days = 15
@@ -42,10 +44,6 @@ def get_transition(
         number_of_business_days = 1
     elif current_state == State.final_email:
         number_of_business_days = 1
-    elif current_state == State.cleanup:
-        return (None, None)
-    elif current_state == State.hold:
-        return (None, None)
 
     new_date = add_business_days(current_state_start_date, number_of_business_days)
     new_state = current_state.next
