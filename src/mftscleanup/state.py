@@ -1,5 +1,5 @@
 from datetime import date
-from enum import Enum
+from enum import Enum, auto
 from functools import total_ordering
 from typing import Optional, Tuple
 
@@ -7,11 +7,13 @@ from mftscleanup.business_days import add_business_days
 
 
 @total_ordering
-class OrderingAndIncrementMixin:
-    """
-    Provides ordering on value. There is an exception that the "hold"
-    member must NOT be compared.
-    """
+class State(Enum):
+    initial = auto()
+    first_email = auto()
+    second_email = auto()
+    final_email = auto()
+    cleanup = auto()
+    hold = auto()
 
     def __lt__(self, other):
         if self.__class__ is other.__class__:
@@ -23,13 +25,6 @@ class OrderingAndIncrementMixin:
     @property
     def next(self) -> Optional["State"]:
         return get_next_state(self)
-
-
-State = Enum(
-    "State",
-    "initial first_email second_email final_email cleanup hold",
-    type=OrderingAndIncrementMixin,
-)
 
 
 STATE_NAMES = [s.name for s in State]
