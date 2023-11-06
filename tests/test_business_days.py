@@ -1,6 +1,6 @@
 from datetime import date as D
 
-from mftscleanup.business_days import add_business_days
+from mftscleanup.business_days import add_business_days, HGSCHolidays
 
 
 """
@@ -16,6 +16,95 @@ Su Mo Tu We Th Fr Sa
 """
 
 D2020_01_06 = D(2020, 1, 6)  # Monday
+
+
+def test_calendar_2019():
+    """
+    2019-01-01 New Year's Day
+    2019-01-21 Martin Luther King Jr. Day
+    2019-02-18 Washington's Birthday
+    2019-04-19 Good Friday
+    2019-05-27 Memorial Day
+    2019-07-04 Independence Day
+    2019-09-02 Labor Day
+    2019-11-28 Thanksgiving
+    2019-11-29 Black Friday
+    2019-12-24 Christmas Eve
+    2019-12-25 Christmas Day
+    """
+    dates = set(HGSCHolidays(years=2019))
+    assert dates == set(
+        [
+            D(2019, 1, 1),
+            D(2019, 1, 21),
+            D(2019, 2, 18),
+            D(2019, 4, 19),
+            D(2019, 5, 27),
+            D(2019, 7, 4),
+            D(2019, 9, 2),
+            D(2019, 11, 28),
+            D(2019, 11, 29),
+            D(2019, 12, 24),
+            D(2019, 12, 25),
+        ]
+    )
+
+
+def test_calendar_2020():
+    """
+    2020-01-01 New Year's Day
+    2020-01-20 Martin Luther King Jr. Day
+    2020-02-17 Washington's Birthday
+    2020-04-10 Good Friday
+    2020-05-25 Memorial Day
+    2020-07-03 Independence Day (Observed)
+    2020-07-04 Independence Day
+    2020-09-07 Labor Day
+    2020-11-26 Thanksgiving
+    2020-11-27 Black Friday
+    2020-12-24 Christmas Eve
+    2020-12-25 Christmas Day
+    """
+    dates = set(HGSCHolidays(years=2020))
+    assert dates == set(
+        [
+            D(2020, 1, 1),
+            D(2020, 1, 20),
+            D(2020, 2, 17),
+            D(2020, 4, 10),
+            D(2020, 5, 25),
+            D(2020, 7, 3),
+            D(2020, 7, 4),
+            D(2020, 9, 7),
+            D(2020, 11, 26),
+            D(2020, 11, 27),
+            D(2020, 12, 24),
+            D(2020, 12, 25),
+        ]
+    )
+
+
+def test_calendar_2022():
+    dates = set(HGSCHolidays(years=2022))
+    assert dates == set(
+        [
+            D(2022, 1, 1),
+            D(2022, 1, 17),
+            D(2022, 2, 21),
+            D(2022, 4, 15),
+            D(2022, 5, 30),
+            D(2022, 6, 19),
+            D(2022, 6, 20),
+            D(2022, 7, 4),
+            D(2022, 9, 5),
+            D(2022, 11, 24),
+            D(2022, 11, 25),
+            D(2022, 12, 23),
+            D(2022, 12, 24),
+            D(2022, 12, 25),
+            D(2022, 12, 26),
+        ]
+    )
 
 
 def test_simple_date_works_as_expected():
@@ -66,6 +155,12 @@ def test_black_friday():
     start = D(2020, 11, 23)  # Monday
     assert add_business_days(start, 2) == D(2020, 11, 25)  # Wednesday
     assert add_business_days(start, 3) == D(2020, 11, 30)  # Monday
+    # Test 2020-11-05:
+    start = D(2020, 11, 5)  # Thursday
+    assert add_business_days(start, 1) == D(2020, 11, 6)  # Friday
+    assert add_business_days(start, 4) == D(2020, 11, 11)  # Wednesday
+    assert add_business_days(start, 5) == D(2020, 11, 12)  # Thursday
+    assert add_business_days(start, 10) == D(2020, 11, 19)  # Thursday
     # Start on the Monday before Thanksgiving each year:
     assert add_business_days(D(2022, 11, 21), 3) == D(2022, 11, 28)
     assert add_business_days(D(2023, 11, 20), 3) == D(2023, 11, 27)
@@ -76,7 +171,17 @@ def test_black_friday():
 
 
 def test_good_friday():
+    """
+        April 2020
+    Su Mo Tu We Th Fr Sa
+              1  2  3  4
+     5  6  7  8  9 GF 11  <- Good Friday was April 10, 2020
+    12 13 14 15 16 17 18
+    19 20 21 22 23 24 25
+    26 27 28 29 30
+    """
     assert add_business_days(D(2020, 4, 7), 4) == D(2020, 4, 14)
+    assert add_business_days(D(2020, 4, 9), 1) == D(2020, 4, 13)
 
 
 """
@@ -100,7 +205,6 @@ Su Mo Tu We Th Fr Sa
 
 
 def test_Juneteenth_2020():
-    # ticket starts on 5/22/2020
     assert add_business_days(D(2020, 5, 22), 15) == D(2020, 6, 15)  # first email test
     assert add_business_days(D(2020, 6, 15), 3) == D(2020, 6, 18)  # second email test
     assert add_business_days(D(2020, 6, 18), 3) == D(2020, 6, 23)  # Final email test
@@ -132,3 +236,84 @@ def test_Juneteenth_2023():
     # ticket starts on 5/22/2023
     assert add_business_days(D(2023, 6, 12), 5) == D(2023, 6, 20)  # first email
     assert add_business_days(D(2023, 6, 20), 3) == D(2023, 6, 23)  # second email
+
+
+def test_no_columbus_day_2022():
+    """
+        October 2022
+    Su Mo Tu We Th Fr Sa
+                       1
+     2  3  4  5  6  7  8
+     9 CD 11 12 13 14 15 <- Oct 10 should be a business day.
+    16 17 18 19 20 21 22
+    23 24 25 26 27 28 29
+    30 31
+    """
+    assert add_business_days(D(2022, 10, 7), 1) == D(2022, 10, 10)
+
+
+def test_christmas_and_christmas_eve():
+    """
+    Add 1 business day to the day before Christmas Eve observed...
+
+    December 2020
+    Su Mo Tu We Th Fr Sa
+           1  2  3  4  5
+     6  7  8  9 10 11 12
+    13 14 15 16 17 18 19
+    20 21 22 23 24 25 26
+    27 28 29 30 31
+
+    December 2021
+    Su Mo Tu We Th Fr Sa
+              1  2  3  4
+     5  6  7  8  9 10 11
+    12 13 14 15 16 17 18
+    19 20 21 22 23 24 25
+    26 27 28 29 30 31
+
+    December 2022
+    Su Mo Tu We Th Fr Sa
+                 1  2  3
+     4  5  6  7  8  9 10
+    11 12 13 14 15 16 17
+    18 19 20 21 22 23 24
+    25 26 27 28 29 30 31
+
+    December 2023
+    Su Mo Tu We Th Fr Sa
+                    1  2
+     3  4  5  6  7  8  9
+    10 11 12 13 14 15 16
+    17 18 19 20 21 22 23
+    24 25 26 27 28 29 30
+    31
+
+    December 2024
+    Su Mo Tu We Th Fr Sa
+     1  2  3  4  5  6  7
+     8  9 10 11 12 13 14
+    15 16 17 18 19 20 21
+    22 23 24 25 26 27 28
+    29 30 31
+
+    December 2029
+    Su Mo Tu We Th Fr Sa
+                       1
+     2  3  4  5  6  7  8
+     9 10 11 12 13 14 15
+    16 17 18 19 20 21 22
+    23 24 25 26 27 28 29
+    30 31
+    """
+    h = HGSCHolidays(years=2021)
+    print(repr(h[D(2021, 12, 24)]))
+    assert h[D(2021, 12, 23)] == "Christmas Eve (Observed)"
+    assert h[D(2021, 12, 24)] == "Christmas Day (Observed), Christmas Eve"
+    assert h[D(2021, 12, 25)] == "Christmas Day"
+    assert add_business_days(D(2020, 12, 23), 1) == D(2020, 12, 28)
+    assert add_business_days(D(2021, 12, 22), 1) == D(2021, 12, 27)
+    assert add_business_days(D(2022, 12, 22), 1) == D(2022, 12, 27)
+    assert add_business_days(D(2023, 12, 21), 1) == D(2023, 12, 26)
+    assert add_business_days(D(2024, 12, 23), 1) == D(2024, 12, 26)
+    assert add_business_days(D(2029, 12, 21), 1) == D(2029, 12, 26)
