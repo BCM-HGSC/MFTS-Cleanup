@@ -8,7 +8,7 @@ from dateutil.easter import easter as E
 from dateutil.relativedelta import relativedelta as RD
 from dateutil.relativedelta import TH, FR
 
-from holidays.countries import USA
+from holidays.countries.united_states import USA
 from holidays.constants import SAT, SUN, WEEKEND, JUN, DEC
 
 
