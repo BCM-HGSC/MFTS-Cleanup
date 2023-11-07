@@ -44,6 +44,8 @@ def get_transition(
         number_of_business_days = 1
     elif current_state == State.FINAL_EMAIL:
         number_of_business_days = 1
+    else:
+        assert False, (current_state, current_state_start_date)
 
     new_date = add_business_days(current_state_start_date, number_of_business_days)
     new_state = current_state.next
