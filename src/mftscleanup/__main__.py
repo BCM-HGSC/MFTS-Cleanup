@@ -24,14 +24,14 @@ from os.path import isdir
 from pathlib import Path
 from sys import argv as sysargv
 from sys import stderr
-from typing import Optional, Sequence
+from typing import Optional
 
 from . import __version__
 from .cleanup import new_share, process_active_shares
 from .metadata_store import MetadataStore
 
 
-def main(argv: Optional[Sequence[str]] = None):
+def main(argv: Optional[list[str]] = None):
     """
     Handles being invoked using `python -m mftscleanup ...`
     """
@@ -52,7 +52,7 @@ def main(argv: Optional[Sequence[str]] = None):
         print(f"bad command: {command}. See --help.", file=stderr)
 
 
-def register_new_share(argv: Optional[Sequence[str]] = None):
+def register_new_share(argv: Optional[list[str]] = None):
     args = parse_register_new_share_command_line(argv)
     metadata_store = MetadataStore(args.metadata_root)
     new_share(
@@ -65,7 +65,7 @@ def register_new_share(argv: Optional[Sequence[str]] = None):
     )
 
 
-def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
+def parse_register_new_share_command_line(argv: Optional[list[str]] = None):
     """
     `register-new-share CONFIG_FILE_PATH RT_NUMBER SHARE_DIRECTORY_PATH EMAIL [EMAIL]...`
     """
@@ -87,13 +87,13 @@ def parse_register_new_share_command_line(argv: Optional[Sequence[str]] = None):
     return args
 
 
-def auto_cleanup_shares(argv: Optional[Sequence[str]] = None):
+def auto_cleanup_shares(argv: Optional[list[str]] = None):
     args = parse_auto_cleanup_shares_command_line(argv)
     metadata_store = MetadataStore(args.metadata_root)
     process_active_shares(metadata_store, date.today())
 
 
-def parse_auto_cleanup_shares_command_line(argv: Optional[Sequence[str]] = None):
+def parse_auto_cleanup_shares_command_line(argv: Optional[list[str]] = None):
     """
     `auto-cleanup-shares METADATA_ROOT`
     """

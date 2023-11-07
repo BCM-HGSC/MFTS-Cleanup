@@ -5,7 +5,7 @@ Stores metadata about shares on the filesystem.
 from datetime import date
 from logging import getLogger
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterable, Union
 
 from addict import Dict
 from yaml import parser, safe_dump, safe_load
@@ -42,7 +42,7 @@ class MetadataStore:
         return self._archive
 
     @property
-    def emailer(self) -> Emailer:
+    def emailer(self) -> Emailer | None:
         if not self._emailer:
             self.load_emailer()
         return self._emailer
@@ -61,7 +61,7 @@ class MetadataStore:
         destination = self.active / f"{share_id}_{event_id}.yaml"
         write_yaml(payload, destination)
 
-    def get_active_shares(self) -> Iterator[str]:
+    def get_active_shares(self) -> Iterable[str]:
         """
         Return the names (eg. "rt1234") of all the active shares.
         """
