@@ -36,6 +36,30 @@ class State(Enum):
 STATE_NAMES = [s.name for s in State]
 
 
+def get_deletion_date(
+    current_state: State, current_state_start_date: date
+) -> date | None:
+    """
+    Return the anticipated deletion date. This should be None if current_state is
+    cleanup or hold. This should be 20 business days after state_start_date if
+    current_state is initial.
+    #"""
+    if current_state == State.CLEANUP or current_state == State.HOLD:
+        return None
+    if current_state == State.INITIAL:
+        num_business_days = 20
+    elif current_state == State.FIRST_EMAIL:
+        num_business_days = 5
+    elif current_state == State.SECOND_EMAIL:
+        num_business_days = 2
+    elif current_state == State.FINAL_EMAIL:
+        num_business_days = 1
+    else:
+        assert False, (current_state, current_state_start_date)
+    deletion_date = add_business_days(current_state_start_date, num_business_days)
+    return deletion_date
+
+
 def get_transition(
     current_state: State, current_state_start_date: date
 ) -> tuple[State, date | None]:
