@@ -91,7 +91,7 @@ class MetadataStore:
         for key, value in payload.items():
             attribute = str(key)
             if attribute.endswith("_date"):
-                state_name = attribute.removesuffix("_date")
+                state_name = attribute.removesuffix("_date").upper()
                 if state_name not in STATE_NAMES:
                     raise BadStateError(f"bad {state_name=} in {yaml_file_path=}")
                 state = State[state_name]
