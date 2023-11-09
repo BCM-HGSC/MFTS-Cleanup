@@ -121,14 +121,14 @@ def test_get_next_state_cleanup():
 
 def test_get_next_state_illegal_str():
     with raises(TypeError):
-        state.get_next_state("initial")
+        state.get_next_state("initial")  # type: ignore
 
 
 def test_get_next_state_illegal_None():
     with raises(TypeError):
-        state.get_next_state(None)
+        state.get_next_state(None)  # type: ignore
 
 
 def test_get_next_state_illegal_false():
     with raises(TypeError):
-        state.get_next_state(False)
+        state.get_next_state(False)  # type: ignore
