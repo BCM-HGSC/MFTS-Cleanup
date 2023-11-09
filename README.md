@@ -6,7 +6,7 @@ Managed File Transfer System (MFTS) has become cluttered with directories within
 This tool that has been created will serve to archive directories along with the ability to send warning emails to our collaborators during the life cycle of the cleanup process. Upon the 4 week completion date, folders will be archived to a new directory to be stored.
 
 
-## Directory cleanup
+## Directory cleanup warning emails
 - 1 week until clean up (3 weeks since rt creation)
 - 48 hrs until cleanup (3 weeks and 4 days from rt creation)
 - 24 hrs until cleanup (3 weeks and 6 days from rt creation)
