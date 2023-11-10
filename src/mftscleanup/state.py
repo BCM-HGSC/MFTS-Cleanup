@@ -1,7 +1,7 @@
 from datetime import date
 from enum import Enum, auto
 from functools import total_ordering
-from typing import Optional
+from typing import Self
 
 from mftscleanup.business_days import add_business_days
 
@@ -23,7 +23,7 @@ class State(Enum):
         return NotImplemented
 
     @property
-    def next(self) -> Optional["State"]:
+    def next(self) -> Self | None:
         return get_next_state(self)
 
 
