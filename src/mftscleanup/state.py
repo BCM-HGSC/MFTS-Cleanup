@@ -1,7 +1,7 @@
 from datetime import date
 from enum import Enum, auto
 from functools import total_ordering
-from typing import Optional, Tuple
+from typing import Optional
 
 from mftscleanup.business_days import add_business_days
 
@@ -32,7 +32,7 @@ STATE_NAMES = [s.name for s in State]
 
 def get_transition(
     current_state: State, current_state_start_date: date
-) -> Tuple[Optional[State], Optional[date]]:
+) -> tuple[State | None, date | None]:
     if current_state in (State.CLEANUP, State.HOLD):
         return (None, None)
 
@@ -53,7 +53,7 @@ def get_transition(
     return new_state, new_date
 
 
-def get_next_state(state: State) -> Optional[State]:
+def get_next_state(state: State) -> State | None:
     """
     initial -> first_email -> second_email -> final_email -> cleanup -> None
 
