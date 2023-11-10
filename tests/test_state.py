@@ -43,12 +43,12 @@ def test_state_ordering():
 
 
 def test_state_next_property():
-    assert state.State.INITIAL.next == state.State.FIRST_EMAIL
-    assert state.State.FIRST_EMAIL.next == state.State.SECOND_EMAIL
-    assert state.State.SECOND_EMAIL.next == state.State.FINAL_EMAIL
-    assert state.State.FINAL_EMAIL.next == state.State.CLEANUP
-    assert state.State.CLEANUP.next is None
-    assert state.State.HOLD.next is None
+    assert state.State.INITIAL.next is state.State.FIRST_EMAIL
+    assert state.State.FIRST_EMAIL.next is state.State.SECOND_EMAIL
+    assert state.State.SECOND_EMAIL.next is state.State.FINAL_EMAIL
+    assert state.State.FINAL_EMAIL.next is state.State.CLEANUP
+    assert state.State.CLEANUP.next is state.State.CLEANUP
+    assert state.State.HOLD.next is state.State.HOLD
 
 
 @mark.parametrize(
@@ -99,36 +99,16 @@ def test_get_transition(test_case: str):
     assert new_date == expect_new_date
 
 
-def test_get_next_state_initial():
-    assert state.get_next_state(state.State.INITIAL) == state.State.FIRST_EMAIL
+def test_get_state_illegal_str():
+    with raises(KeyError):
+        state.State["initial"]
 
 
-def test_get_next_state_first_email():
-    assert state.get_next_state(state.State.FIRST_EMAIL) == state.State.SECOND_EMAIL
+def test_get_state_illegal_None():
+    with raises(KeyError):
+        state.State[None]  # type: ignore
 
 
-def test_get_next_state_second_email():
-    assert state.get_next_state(state.State.SECOND_EMAIL) == state.State.FINAL_EMAIL
-
-
-def test_get_next_state_final_email():
-    assert state.get_next_state(state.State.FINAL_EMAIL) == state.State.CLEANUP
-
-
-def test_get_next_state_cleanup():
-    assert state.get_next_state(state.State.CLEANUP) is None
-
-
-def test_get_next_state_illegal_str():
-    with raises(TypeError):
-        state.get_next_state("initial")  # type: ignore
-
-
-def test_get_next_state_illegal_None():
-    with raises(TypeError):
-        state.get_next_state(None)  # type: ignore
-
-
-def test_get_next_state_illegal_false():
-    with raises(TypeError):
-        state.get_next_state(False)  # type: ignore
+def test_get_state_illegal_false():
+    with raises(KeyError):
+        state.State[False]  # type: ignore

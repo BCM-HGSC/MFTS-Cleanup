@@ -1,8 +1,6 @@
 from datetime import date
 from enum import Enum, auto
 from functools import total_ordering
-from hmac import new
-from typing import Self
 
 from mftscleanup.business_days import add_business_days
 
@@ -24,8 +22,15 @@ class State(Enum):
         return NotImplemented
 
     @property
-    def next(self) -> Self | None:
-        return get_next_state(self)
+    def next(self) -> "State":
+        """
+        INITIAL -> FIRST_EMAIL -> SECOND_EMAIL -> FINAL_EMAIL -> CLEANUP
+        The result for State.CLEANUP or State.HOLD is self.
+        """
+        value = self.value
+        if value < self.__class__.CLEANUP.value:
+            return State(value + 1)
+        return self
 
 
 STATE_NAMES = [s.name for s in State]
@@ -54,18 +59,3 @@ def get_transition(
     assert new_state is not None
 
     return new_state, new_date
-
-
-def get_next_state(state: State) -> State | None:
-    """
-    initial -> first_email -> second_email -> final_email -> cleanup -> None
-
-    It is an error to call this with anything other than a State.
-    Calling with State.CLEANUP or State.HOLD should return None.
-    """
-    if not isinstance(state, State):
-        raise TypeError(f"bad state: {state!r}")
-    value = state.value
-    if value < State.CLEANUP.value:
-        return State(value + 1)
-    return None
