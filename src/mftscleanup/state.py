@@ -1,6 +1,7 @@
 from datetime import date
 from enum import Enum, auto
 from functools import total_ordering
+from hmac import new
 from typing import Self
 
 from mftscleanup.business_days import add_business_days
@@ -32,9 +33,9 @@ STATE_NAMES = [s.name for s in State]
 
 def get_transition(
     current_state: State, current_state_start_date: date
-) -> tuple[State | None, date | None]:
+) -> tuple[State, date] | tuple[None, None]:
     if current_state in (State.CLEANUP, State.HOLD):
-        return (None, None)
+        return None, None
 
     if current_state == State.INITIAL:
         number_of_business_days = 15
@@ -48,7 +49,9 @@ def get_transition(
         assert False, (current_state, current_state_start_date)
 
     new_date = add_business_days(current_state_start_date, number_of_business_days)
+    assert new_date is not None, (current_state, current_state_start_date)
     new_state = current_state.next
+    assert new_state is not None
 
     return new_state, new_date
 
