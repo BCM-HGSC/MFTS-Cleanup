@@ -11,61 +11,61 @@ def test_state_values():
     """
     names = [s.name for s in state.State]
     assert names == [
-        "initial",
-        "first_email",
-        "second_email",
-        "final_email",
-        "cleanup",
-        "hold",
+        "INITIAL",
+        "FIRST_EMAIL",
+        "SECOND_EMAIL",
+        "FINAL_EMAIL",
+        "CLEANUP",
+        "HOLD",
     ]
-    assert state.State.initial
-    assert state.State.first_email
-    assert state.State.second_email
-    assert state.State.final_email
-    assert state.State.cleanup
-    assert state.State.hold
+    assert state.State.INITIAL
+    assert state.State.FIRST_EMAIL
+    assert state.State.SECOND_EMAIL
+    assert state.State.FINAL_EMAIL
+    assert state.State.CLEANUP
+    assert state.State.HOLD
     assert len(set(state.State)) == 6
 
 
 def test_state_ordering():
     S = state.State
-    assert S.initial < S.first_email
-    assert S.first_email < S.second_email
-    assert S.second_email < S.final_email
-    assert S.final_email < S.cleanup
-    with raises(TypeError):  # Order comparisons to S.hold is not supported.
-        S.initial < S.hold
-    assert S.hold is S.hold
-    assert S.hold == S.hold
-    assert S.initial != S.hold
+    assert S.INITIAL < S.FIRST_EMAIL
+    assert S.FIRST_EMAIL < S.SECOND_EMAIL
+    assert S.SECOND_EMAIL < S.FINAL_EMAIL
+    assert S.FINAL_EMAIL < S.CLEANUP
+    with raises(TypeError):  # Order comparisons to S.HOLD is not supported.
+        _ = S.INITIAL < S.HOLD
+    assert S.HOLD is S.HOLD
+    assert S.HOLD == S.HOLD
+    assert S.INITIAL != S.HOLD
     with raises(TypeError):
-        S.cleanup < 9
+        _ = S.CLEANUP < 9
 
 
 def test_state_next_property():
-    assert state.State.initial.next == state.State.first_email
-    assert state.State.first_email.next == state.State.second_email
-    assert state.State.second_email.next == state.State.final_email
-    assert state.State.final_email.next == state.State.cleanup
-    assert state.State.cleanup.next is None
-    assert state.State.hold.next is None
+    assert state.State.INITIAL.next == state.State.FIRST_EMAIL
+    assert state.State.FIRST_EMAIL.next == state.State.SECOND_EMAIL
+    assert state.State.SECOND_EMAIL.next == state.State.FINAL_EMAIL
+    assert state.State.FINAL_EMAIL.next == state.State.CLEANUP
+    assert state.State.CLEANUP.next is None
+    assert state.State.HOLD.next is None
 
 
 @mark.parametrize(
     "test_case",
     [
         # Note that MLK day on the 20 shifts all subsequent dates.
-        "initial       2020-01-01  first_email  2020-01-23",
-        "first_email   2020-01-23  second_email 2020-01-28",
-        "second_email  2020-01-28  final_email  2020-01-29",
-        "final_email   2020-01-29  cleanup      2020-01-30",
-        "cleanup       2020-01-30  None         None",
+        "INITIAL       2020-01-01  FIRST_EMAIL  2020-01-23",
+        "FIRST_EMAIL   2020-01-23  SECOND_EMAIL 2020-01-28",
+        "SECOND_EMAIL  2020-01-28  FINAL_EMAIL  2020-01-29",
+        "FINAL_EMAIL   2020-01-29  CLEANUP      2020-01-30",
+        "CLEANUP       2020-01-30  None         None",
         # Test cases for a share that missed all holidays:
-        "initial       2020-08-03  first_email  2020-08-24",
-        "first_email   2020-08-24  second_email 2020-08-27",
-        "second_email  2020-08-27  final_email  2020-08-28",
-        "final_email   2020-08-28  cleanup      2020-08-31",
-        "cleanup       2020-08-31  None         None",
+        "INITIAL       2020-08-03  FIRST_EMAIL  2020-08-24",
+        "FIRST_EMAIL   2020-08-24  SECOND_EMAIL 2020-08-27",
+        "SECOND_EMAIL  2020-08-27  FINAL_EMAIL  2020-08-28",
+        "FINAL_EMAIL   2020-08-28  CLEANUP      2020-08-31",
+        "CLEANUP       2020-08-31  None         None",
         # Test cases for a share that spans the Thanksgiving weekend:
         # November 2020
         # Su Mo Tu We Th Fr Sa
@@ -79,12 +79,12 @@ def test_state_next_property():
         # Su Mo Tu We Th Fr Sa
         #        1  2  3  4  5
         #  6  7  8  9 10 11 12
-        "initial       2020-11-05  first_email  2020-11-30",
+        "INITIAL       2020-11-05  FIRST_EMAIL  2020-11-30",
         #    Thanksgiving and Black Friday fall on the 26th and 27th
-        "first_email   2020-11-30  second_email 2020-12-03",
-        "second_email  2020-12-03  final_email  2020-12-04",
-        "final_email   2020-12-04  cleanup      2020-12-07",
-        "cleanup       2020-12-07  None         None",
+        "FIRST_EMAIL   2020-11-30  SECOND_EMAIL 2020-12-03",
+        "SECOND_EMAIL  2020-12-03  FINAL_EMAIL  2020-12-04",
+        "FINAL_EMAIL   2020-12-04  CLEANUP      2020-12-07",
+        "CLEANUP       2020-12-07  None         None",
     ],
 )
 def test_get_transition(test_case: str):
@@ -100,35 +100,35 @@ def test_get_transition(test_case: str):
 
 
 def test_get_next_state_initial():
-    assert state.get_next_state(state.State.initial) == state.State.first_email
+    assert state.get_next_state(state.State.INITIAL) == state.State.FIRST_EMAIL
 
 
 def test_get_next_state_first_email():
-    assert state.get_next_state(state.State.first_email) == state.State.second_email
+    assert state.get_next_state(state.State.FIRST_EMAIL) == state.State.SECOND_EMAIL
 
 
 def test_get_next_state_second_email():
-    assert state.get_next_state(state.State.second_email) == state.State.final_email
+    assert state.get_next_state(state.State.SECOND_EMAIL) == state.State.FINAL_EMAIL
 
 
 def test_get_next_state_final_email():
-    assert state.get_next_state(state.State.final_email) == state.State.cleanup
+    assert state.get_next_state(state.State.FINAL_EMAIL) == state.State.CLEANUP
 
 
 def test_get_next_state_cleanup():
-    assert state.get_next_state(state.State.cleanup) is None
+    assert state.get_next_state(state.State.CLEANUP) is None
 
 
 def test_get_next_state_illegal_str():
     with raises(TypeError):
-        state.get_next_state("initial")
+        state.get_next_state("initial")  # type: ignore
 
 
 def test_get_next_state_illegal_None():
     with raises(TypeError):
-        state.get_next_state(None)
+        state.get_next_state(None)  # type: ignore
 
 
 def test_get_next_state_illegal_false():
     with raises(TypeError):
-        state.get_next_state(False)
+        state.get_next_state(False)  # type: ignore

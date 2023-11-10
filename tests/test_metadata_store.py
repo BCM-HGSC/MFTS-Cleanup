@@ -80,12 +80,12 @@ def test_get_active_shares_rt1234_first_email(rt1234_first_email: FakeShare):
 
 def test_get_share_state_rt1234_initial(rt1234_initial: FakeShare):
     result = rt1234_initial.metadata_store.get_share_state("rt1234")
-    assert result == (state.State.initial, D(2020, 1, 1))
+    assert result == (state.State.INITIAL, D(2020, 1, 1))
 
 
 def test_get_share_state_rt1234_first_email(rt1234_first_email: FakeShare):
     result = rt1234_first_email.metadata_store.get_share_state("rt1234")
-    assert result == (state.State.first_email, D(2020, 1, 23))
+    assert result == (state.State.FIRST_EMAIL, D(2020, 1, 23))
 
 
 def test_get_share_state_rt1234_not_dict(rt1234: FakeShare):

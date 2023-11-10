@@ -3,10 +3,10 @@ from datetime import date
 from pytest import mark
 
 from mftscleanup import __main__
-from helpers import FakeShare
+from helpers import FakeShare, Scenario
 
 
-def test_auto_cleanup_shares_no_shares(scenario: FakeShare):
+def test_auto_cleanup_shares_no_shares(scenario: Scenario):
     """
     There are no shares.
     Invoke the top-level main function from within the pytest process.
