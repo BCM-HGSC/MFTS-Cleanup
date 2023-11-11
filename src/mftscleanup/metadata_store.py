@@ -5,7 +5,6 @@ Stores metadata about shares on the filesystem.
 from datetime import date
 from logging import getLogger
 from pathlib import Path
-from typing import Iterable, Union
 
 from addict import Dict
 from yaml import parser, safe_dump, safe_load
@@ -23,7 +22,7 @@ class MetadataStore:
     email configuration, and the mapping file from sponsor ID to sponsor email.
     """
 
-    def __init__(self, metadata_root: Union[str, Path]) -> None:
+    def __init__(self, metadata_root: str | Path) -> None:
         self.metadata_root = Path(metadata_root)
         self._active = self.metadata_root / "active"
         self._archive = self.metadata_root / "archive"
@@ -61,7 +60,7 @@ class MetadataStore:
         destination = self.active / f"{share_id}_{event_id}.yaml"
         write_yaml(payload, destination)
 
-    def get_active_shares(self) -> Iterable[str]:
+    def get_active_shares(self) -> list[str]:
         """
         Return the names (eg. "rt1234") of all the active shares.
         """
