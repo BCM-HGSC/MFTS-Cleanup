@@ -59,13 +59,13 @@ def test_state_next_property():
         "FIRST_EMAIL   2020-01-23  SECOND_EMAIL 2020-01-28",
         "SECOND_EMAIL  2020-01-28  FINAL_EMAIL  2020-01-29",
         "FINAL_EMAIL   2020-01-29  CLEANUP      2020-01-30",
-        "CLEANUP       2020-01-30  None         None",
+        "CLEANUP       2020-01-30  CLEANUP         None",
         # Test cases for a share that missed all holidays:
         "INITIAL       2020-08-03  FIRST_EMAIL  2020-08-24",
         "FIRST_EMAIL   2020-08-24  SECOND_EMAIL 2020-08-27",
         "SECOND_EMAIL  2020-08-27  FINAL_EMAIL  2020-08-28",
         "FINAL_EMAIL   2020-08-28  CLEANUP      2020-08-31",
-        "CLEANUP       2020-08-31  None         None",
+        "CLEANUP       2020-08-31  CLEANUP         None",
         # Test cases for a share that spans the Thanksgiving weekend:
         # November 2020
         # Su Mo Tu We Th Fr Sa
@@ -84,7 +84,8 @@ def test_state_next_property():
         "FIRST_EMAIL   2020-11-30  SECOND_EMAIL 2020-12-03",
         "SECOND_EMAIL  2020-12-03  FINAL_EMAIL  2020-12-04",
         "FINAL_EMAIL   2020-12-04  CLEANUP      2020-12-07",
-        "CLEANUP       2020-12-07  None         None",
+        "CLEANUP       2020-12-07  CLEANUP         None",
+        "HOLD          2020-12-07  HOLD            None",
     ],
 )
 def test_get_transition(test_case: str):
