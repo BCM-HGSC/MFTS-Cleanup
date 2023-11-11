@@ -1,8 +1,6 @@
 from datetime import date
 from enum import Enum, auto
 from functools import total_ordering
-from hmac import new
-from typing import Self
 
 from mftscleanup.business_days import add_business_days
 
@@ -24,8 +22,15 @@ class State(Enum):
         return NotImplemented
 
     @property
-    def next(self) -> Self | None:
-        return get_next_state(self)
+    def next(self) -> "State":
+        """
+        INITIAL -> FIRST_EMAIL -> SECOND_EMAIL -> FINAL_EMAIL -> CLEANUP
+        The result for State.CLEANUP or State.HOLD is self.
+        """
+        value = self.value
+        if value < self.__class__.CLEANUP.value:
+            return State(value + 1)
+        return self
 
 
 STATE_NAMES = [s.name for s in State]
@@ -33,9 +38,13 @@ STATE_NAMES = [s.name for s in State]
 
 def get_transition(
     current_state: State, current_state_start_date: date
-) -> tuple[State, date] | tuple[None, None]:
+) -> tuple[State, date | None]:
+    """
+    Return the next state and the date of transition to that new state. Return
+    None for date if the next state is the current state.
+    """
     if current_state in (State.CLEANUP, State.HOLD):
-        return None, None
+        return current_state, None
 
     if current_state == State.INITIAL:
         number_of_business_days = 15
@@ -49,23 +58,7 @@ def get_transition(
         assert False, (current_state, current_state_start_date)
 
     new_date = add_business_days(current_state_start_date, number_of_business_days)
-    assert new_date is not None, (current_state, current_state_start_date)
     new_state = current_state.next
-    assert new_state is not None
+    assert new_state is not None, (current_state, current_state_start_date)
 
     return new_state, new_date
-
-
-def get_next_state(state: State) -> State | None:
-    """
-    initial -> first_email -> second_email -> final_email -> cleanup -> None
-
-    It is an error to call this with anything other than a State.
-    Calling with State.CLEANUP or State.HOLD should return None.
-    """
-    if not isinstance(state, State):
-        raise TypeError(f"bad state: {state!r}")
-    value = state.value
-    if value < State.CLEANUP.value:
-        return State(value + 1)
-    return None
