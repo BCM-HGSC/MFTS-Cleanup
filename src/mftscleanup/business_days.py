@@ -4,6 +4,7 @@ future. A data is a business day if it is neither a weekend nor a US observed ho
 """
 
 from datetime import date, timedelta
+from tkinter import ON
 
 from dateutil.easter import easter
 from dateutil.relativedelta import relativedelta as RD, TH, FR
@@ -16,6 +17,7 @@ ONE_DAY = timedelta(days=1)
 
 class HGSCHolidays(UnitedStates):
     def _populate(self, year):
+        print("populating", year)
         # Populate the holiday list with the default US holidays.
         super()._populate(year)
         # Remove holidays not observed at HGSC.
@@ -35,22 +37,12 @@ class HGSCHolidays(UnitedStates):
                 self[date(year, JUN, 20)] = name + " (Observed)"
         # Use the formula for Thanksgiving and add one day:
         self[date(year, 11, 1) + RD(weekday=TH(+4)) + ONE_DAY] = "Black Friday"
-        # Christmas Eve
-        # HGSC celebrated Christmas Eve before 2022, but not in 2022 or 2023 when it
-        # fell on a weekend.
-        # It is unclear what the future will hold regarding Christmas Eve.
-        # It could be that the Christmas Eve had to be sacrificed to obtain Juneteenth.
-        # We will treat Christmas Eve and observed Christmas Eve as a
-        # non-business day to be conservative.
-        name = "Christmas Eve"
-        self[date(year, DEC, 24)] = name
-        name = name + " (Observed)"
-        # If on Friday, observed on Thursday (the 23rd)
-        if date(year, DEC, 24).weekday() == FRI:
-            self[date(year, DEC, 23)] = name
-        # If on Saturday or Sunday, observed on Friday
-        elif date(year, DEC, 24).weekday() in WEEKEND:
-            self[date(year, DEC, 24) + RD(weekday=FR(-1))] = name
+        # Add winter break, the period between Christmas and New Year.
+        # To be conservative, include on Dec 23 through Jan 2.
+        month_days = [(1, 1), (1, 2)] + [(12, d) for d in range(23, 32)]
+        for m, d in month_days:
+            self.append(date(year, m, d))
+        return
 
 
 hgsc_holidays = HGSCHolidays()

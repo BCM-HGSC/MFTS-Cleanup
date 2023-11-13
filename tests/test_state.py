@@ -51,15 +51,26 @@ def test_state_next_property():
     assert state.State.HOLD.next is state.State.HOLD
 
 
+"""
+    January 2020
+Su Mo Tu We Th Fr Sa
+          H  H  3  4  <- Winter Break
+ 5  6  7  8  9 10 11
+12 13 14 15 16 17 18
+19 ML 21 22 23 24 25  <- MLK Day
+26 27 28 29 30 31
+"""
+
+
 @mark.parametrize(
     "test_case",
     [
         # Note that MLK day on the 20 shifts all subsequent dates.
-        "INITIAL       2020-01-01  FIRST_EMAIL  2020-01-23",
-        "FIRST_EMAIL   2020-01-23  SECOND_EMAIL 2020-01-28",
-        "SECOND_EMAIL  2020-01-28  FINAL_EMAIL  2020-01-29",
-        "FINAL_EMAIL   2020-01-29  CLEANUP      2020-01-30",
-        "CLEANUP       2020-01-30  CLEANUP         None",
+        "INITIAL       2020-01-01  FIRST_EMAIL  2020-01-24",
+        "FIRST_EMAIL   2020-01-24  SECOND_EMAIL 2020-01-29",
+        "SECOND_EMAIL  2020-01-29  FINAL_EMAIL  2020-01-30",
+        "FINAL_EMAIL   2020-01-30  CLEANUP      2020-01-31",
+        "CLEANUP       2020-01-31  CLEANUP         None",
         # Test cases for a share that missed all holidays:
         "INITIAL       2020-08-03  FIRST_EMAIL  2020-08-24",
         "FIRST_EMAIL   2020-08-24  SECOND_EMAIL 2020-08-27",
