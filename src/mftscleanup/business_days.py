@@ -4,7 +4,6 @@ future. A data is a business day if it is neither a weekend nor a US observed ho
 """
 
 from datetime import date, timedelta
-from tkinter import ON
 
 from dateutil.easter import easter
 from dateutil.relativedelta import relativedelta as RD, TH, FR

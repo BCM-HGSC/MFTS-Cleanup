@@ -193,19 +193,11 @@ def test_black_friday():
     assert add_business_days(D(2024, 11, 25), 3) == D(2024, 12, 2)
     assert add_business_days(D(2025, 11, 24), 3) == D(2025, 12, 1)
     assert add_business_days(D(2028, 11, 1), 1) == D(2028, 11, 2)
+    assert add_business_days(D(2027, 11, 22), 3) == D(2027, 11, 29)
     assert add_business_days(D(2029, 11, 19), 3) == D(2029, 11, 26)
-    # from holidays.constants import FRI, SAT, SUN, WEEKEND, JUN, DEC
     for k, v in sorted(hgsc_holidays.items()):
         d: D = k
         print(d, d.strftime("%a"), v)
-    # 1 / 0
-    return
-
-
-def test_weird():
-    # return
-    assert add_business_days(D(2027, 11, 22), 3) == D(2027, 11, 29)
-    # 1 / 0
 
 
 def test_good_friday():
