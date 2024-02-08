@@ -1,7 +1,7 @@
 metadata_root: path/to/metadata-root
 # TODO: not implemented yet
-# email:
-#   from_address: SENDER@bcm.edu
-#   host: SMTP.SERVER.DOMAIN
-# logging:
-#   level: INFO
+email:
+  from_address: hgsc-submit@hgsc.bcm.edu
+  host: SMTP.SERVER.DOMAIN
+logging:
+  level: INFO
