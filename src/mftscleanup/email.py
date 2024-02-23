@@ -47,7 +47,7 @@ class Emailer:
                     server.starttls(context=context)
                     server.login(self.credentials.username, self.credentials.password)
                 server.send_message(self.message)
-        except Exception:
-            logger.exception("Unable to send email")
+        except Exception as e:
+            logger.exception("Unable to send email: %s", e)
             return 1
         return 0
